@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.urls import include, path
-from .views import home_page, landing_page, signin_page, signup_page, dashboard_page, create_page, deposit_page
+from .views import home_page, landing_page, signin_page, signup_page, dashboard_page, create_page, deposit_page, test_page
 from .views import messages_page, portfolio_page, settings_page, transactions_page, withdraw_page, sign_out, add_portfolio, sent_messages_page, reply_page
 from .views import invoice_page, deposit_summary, withdraw_summary, withdraw_amount, withdraw_success, track_invoice, create_invoice, update_payment, compose_page, create_message, single_message_page
 
 
 urlpatterns = [
-    path('', home_page),
+    path('', test_page),
     path('landing/<int:id>', landing_page, name='landing_page'), 
     path('signin/', signin_page, name='signin_page'), 
     path('signup/', signup_page, name='signup_page'), 
