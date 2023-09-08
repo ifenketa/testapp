@@ -12,6 +12,9 @@ from bitcoinaddress import Wallet
 
 import requests
 
+def test_page(request):
+    return render(request, 'test.html', {})
+
 def home_page(request):
     currencies = Currency.objects.all().values()
     context = {
