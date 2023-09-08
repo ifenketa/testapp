@@ -12,7 +12,7 @@ SECRET_KEY = 'django-insecure-uhe*(vd6vk*j2sr39@(mmpe0c*(apquc4e!2l@#8c$ttjfmjxj
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mycoinapp-b296c061a236.herokuapp.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -36,7 +36,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'coinlaps_project.urls'
@@ -61,19 +61,19 @@ WSGI_APPLICATION = 'coinlaps_project.wsgi.application'
 
 # Database
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd6lhus00u5kar6',
-        'USER': 'dgikzrqxwpvken',
-        'PASSWORD': '9263f8707e59d637c53038873fb2efa27df77ea283aa5c185d18ba8b9294d6fd',
+        'NAME': 'd43vo65qea3126',
+        'USER': 'cphgakizonfoug',
+        'PASSWORD': '3ca240a2424d516e939ae6fbbd33bbb8c5336206098ae7d160dd66acc6be82ea',
         'HOST': 'ec2-34-226-11-94.compute-1.amazonaws.com',
         'PORT': '5432'
     }
