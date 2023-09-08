@@ -1,0 +1,288 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coinreef </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/waves.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <script src="{% static 'js/popper.min.js' %}"></script>
+
+    <style> 
+.expiring {
+  width: 100px;
+  height: 100px;
+  background-color: #2f2cd8;
+  animation-name: example;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes example {
+  from {opacity: 1;}
+  to {opacity: 0.5;}
+}
+</style>
+</head>
+
+<body class="dashboard">
+
+<div id="ajaxpreloader" style="display: none;">
+        <div class="ajaxsk-three-bounce">
+            <div class="sk-child "><img src="{% static 'fonts/ripple.svg' %}"></div>   
+        </div>
+    </div>
+
+    <div id="main-wrapper" class="show">
+
+        <div class="header dashboard">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                    <nav class="navbar navbar-expand-lg navbar-light px-0">
+                            <a class="navbar-brand" href="/dashboard"><img src="{% static 'images/w_logo.png' %}" alt=""></a>
+                            <button class="navbar-toggler waves-effect" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link"                       href="/dashboard"
+>Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/deposit">Deposit</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/withdraw">Withdraw</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " href="/portfolio">Portfolio</a>
+                                    </li>
+                                    <span class="mobalert">  <table style="padding: 5px;width: 100%;color: white;">
+                                        <tbody><tr>
+                                            <td style="padding-right:10px;" align="right">Balance</td>
+                                            <td style="padding-left:10px;" align="left"></td>
+      </tr>
+                                        
+                                        <tr>
+                                        <td style="padding-right:10px;" align="right"><li class="crypto">
+                                            <span>200.0004</span>
+                                            <i class="cc BTC-alt"></i>
+
+                                        </li></td>
+                                        <td style="padding-left:10px;" align="left"><li class="usd">
+                                        <span>5,306,082.61 €</span>
+                                        </li></td>
+  </tr></tbody></table></span>
+                                </ul>
+                            </div>
+                            <div class="dashboard_log my-2">
+                                <div class="d-flex align-items-center">
+                                    <div class="account_money">
+                                        <ul>
+                                            <li class="crypto">
+                                                <span>200.0004</span>
+                                                <i class="cc BTC-alt"></i>
+
+                                            </li>
+                                            <li class="usd">
+                                                <span>5,306,082.61 €</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="profile_log dropdown">
+                                        <div class="user" data-toggle="dropdown">
+                                            <span class="thumb"><i class="la la-user"></i><span id="menuBadge" class="badge" style="display:none;"></span></span>
+                                            <span class="name">Private User</span>
+                                            <span class="arrow"><i class="la la-angle-down"></i></span>
+                                        </div>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="/messages" class="dropdown-item">
+                                                <i class="la la-envelope"></i> Messages 
+                                                <span id="dropdownBadge" class="badge" style="background-color:#6610f2;color:#fff;display:none;top: -20px;width:60%;margin:auto;"></span>
+                                            </a>
+                                            <a href="/transactions"class="dropdown-item">
+                                                <i class="la la-th-list"></i> Transactions
+                                            </a>
+                                            <a href="/settings" class="dropdown-item">
+                                                <i class="la la-cog"></i> Settings
+                                            </a>
+                                            
+                                            <a href="/signout" class="dropdown-item logout">
+                                                <i class="la la-sign-out"></i> Logout
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page_title section-padding">
+</div>
+            <div class="container">
+            <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-12">
+                        <div class="card profile_card">
+                            <div class="card-body">
+                                <div class="media">
+                                    <img class="mr-3 rounded-circle mr-0 mr-sm-3" src="{% static '/2.png' %}" alt="" width="60" height="60">
+                                    <div class="media-body">
+                                        <span>Hello</span>
+                                        <h4 class="mb-2">Private User</h4>
+                                        <p class="mb-1"> <span><i class="fa fa-phone mr-2 text-primary"></i></span> +4915****64997</p>
+                                        <p class="mb-1"> <span><i class="fa fa-envelope mr-2 text-primary"></i></span>
+                                                                                </p>
+                                    </div>
+                                </div>
+
+                                <ul class="card-profile__info">
+                                    <li>
+                                        <h5 class="text-dark mr-4">IP Address</h5>
+                                        <span class="text-muted">IP is never stored/logged</span>
+                                    </li>
+                                    
+                                    <li>
+                                        <h5 class="text-danger mr-4">Last Login</h5>
+                                        <span class="text-danger">18/Jul/2023  6:35pm</span>
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+          <div class="col-xl-8 col-lg-8 col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Account Settings</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        
+                            <div id="errorBox" class="alert alert-danger show flex items-center mb-2" style="display: none;"></div>
+                            
+                            <div id="successBox" class="alert alert-success show flex items-center mb-2" style="display: none;"></div>
+                                        <form method="post" name="myform" class="personal_validate" novalidate="novalidate" onsubmit="event.preventDefault(); settings();">
+                                            <div class="form-row">
+                                                <div class="form-group col-xl-6">
+                                                    <label class="mr-sm-2">Your Name (Optional)</label>
+                                                    <input type="text" id="name" class="form-control" placeholder="Maria Pascle" name="fullname" value="Private User">
+                                                </div>
+                                                <div class="form-group col-xl-6">
+                                                    <label class="mr-sm-2">Email (Optional)</label>
+                                                    <input type="email" id="email" class="form-control" placeholder="Hello@example.com" name="email" value="10446981">
+                                                </div>
+                                                <div class="form-group col-xl-6">
+                                                    <label class="mr-sm-2">New Password</label>
+                                                    <input type="password" id="password" class="form-control hasDatepicker" placeholder="new password" autocomplete="off" name="dob">
+                                                </div>
+                                                <div class="form-group col-xl-6">
+                                                    <label class="mr-sm-2">Confirm Password</label>
+                                                    <input type="password" id="password2" class="form-control" placeholder="confirm password" name="presentaddress">
+                                                </div>
+                                                
+                                                
+                                                
+                                                
+
+                                                <div class="form-group col-12">
+                                                    <button class="btn btn-success pl-5 pr-5 waves-effect">Save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>          
+                </div>
+                
+                    
+                <div class="row">
+                    
+                
+        </div>
+
+
+
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-md-6">
+                        
+                    </div>
+                    <div class="col-xl-6 col-md-6 text-lg-right text-center">
+                        <div class="social">
+                                                                            </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-xl-12 text-center text-lg-right">
+                        <div class="copy_right text-center text-lg-center">
+                            © 2023 First Sentier Investors Funds Ltd.
+                            <br> (UK Registration: 02294743)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="ajaxloader" style="display: none;">
+        <div id="ajaxpreloader">
+            <div class="ajaxsk-three-bounce">
+                <div class="sk-child "><img src="{% static 'fonts/ripple.svg' %}"></div>
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        function preLoader(y){
+            if(y=="on"){
+                document.getElementById('ajaxloader').style.display="block";
+            }
+            if(y=="off"){
+                document.getElementById('ajaxloader').style.display="none";
+            }
+        }
+        function navigate(link){
+            preLoader('on');
+            window.location.href=link;
+        }
+    </script>
+
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/waves.min.js' %}"></script>
+    <script src="{% static 'js/magnific-popup.js' %}"></script>
+    <script src="{% static 'js/magnific-popup-init.js' %}"></script>
+    
+
+
+ 
+
+
+    <!-- <script src="./js/dashboard.js"></script> -->
+    <script src="{% static '/scripts.js' %}"></script>
+    <script id="badgeScript" src="{% static '/checkMessages.js' %}"></script>       
+    <script id="Setttings" src="{% static '/settings.js' %}"></script>
+   
+
+
+</div></body></html>

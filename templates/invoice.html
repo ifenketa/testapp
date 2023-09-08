@@ -1,0 +1,408 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<div class="homepage mb-80">
+   <div class="container">
+      <div class="row">
+         <div class="col-xl-7 col-lg-7 col-md-12">
+            <div class="card" style="background:#f7f8fa;">
+               <div class="card-body">
+                  <div class="buyer-seller">
+                     <div class="d-flex justify-content-between mb-3">
+                        <div class="seller-info text-right">
+                           <span id="folioName"></span> 
+                           <h4 class="card-title" style="font-weight:200;">INVOICE PAYMENT DETAILS</h4>
+                        </div>
+                     </div>
+                     <table width="100%">
+                        <tbody>
+                           <tr>
+                              <td align="right">
+                                 <h6 id="expiry" >Expiring: 1d 23h 59m 26s </h6>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <div class="progress" style="align-text:middle;">
+                                    <div id="prog" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 1.01937%;"></div>
+                                 </div>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     <div class="table-responsive">
+                        <table class="table">
+                           <tbody>
+                              <tr id="invDetails1">
+                                 <td>
+                                    <span>PAY TO :</span><br>
+                                    <a href="#" onclick="copyFn();">
+                                       <span id="address" style="font-weight:200;">{{invoice.wallet_address}}</span>
+                                       <br>
+                                       <h6><i class="la la-copy"></i><span id="copyText"> Copy</span></h6>
+                                    </a>
+                                 </td>
+                              </tr>
+                              <tr id="invDetails2">
+                                 <td>
+                                    <span>QR CODE :</span><br>
+                                    <img src="https://www.bitcoinqrcodemaker.com/api/?style=bitcoin&address={{invoice.wallet_address}}&amount={{invoice.invoice_amount}}&color=1">
+                                    <!-- <img src="{% static 'chart' %}" alt="" class="img-fluid"> -->
+                                    <br>
+                                    <h5 style="color:grey;"><small>If the QR code doesn't work with your wallet, simply copy and paste the bitcoin address displayed above.</small></h5>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td><span>INVOICE AMOUNT :</span><br>
+                                    <span style="font-weight:200;">{{invoice.invoice_amount}} BTC</span>
+                                 </td>
+                              </tr>
+                              <tr id="totalPaid" style="display:none;">
+                                 <td><span>AMOUNT PAID:</span><br>
+                                    <span style="font-weight:200;" id="paid"></span>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td><span>AMOUNT DUE :</span><br>
+                                    <span style="font-weight:200;" id="due">{{invoice.amount_due}} BTC</span>
+                                 </td>
+                              </tr>
+                              <tr id="invDetails3">
+                                 <td><span>REMARK :</span><br>
+                                    <span style="font-weight:200;">
+                                    You may split your payments into various amounts, be advised however that applicable network fees may be applied to subsequent incoming payments.
+                                    </span><br><b>Your invoice can ONLY accept Bitcoin(BTC) payments. Other cryptocurrencies such as Ethereum(ETH), Litecoin(LTC) or Bitcoin-cash(BCH) are not accepted.</b>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-xl-5 col-lg-5">
+            <div class="card" style="background:#f7f8fa;">
+               <div class="card-body">
+                  <div class="buyer-seller">
+                     <div class="d-flex justify-content-between mb-3">
+                        <div class="seller-info text-right">
+                           <span id="folioName"></span> 
+                           <h4 class="card-title" style="font-weight:200;">PAYMENT(S) HISTORY</h4>
+                        </div>
+                     </div>
+                     <span id="address" style="font-weight:200;">Real-time historical records of your incoming invoice payments</span>
+                     <table class="table">
+                        <tbody id="tableResults">
+                           <tr>
+                              <td></td>
+                              <td align="center">Your payments will automatically display here</td>
+                              <td></td>
+                           </tr>
+                           <tr>
+                              <td></td>
+                              <td align="center"> <img src="{% static 'fonts/ripple.svg' %}" height="50px"></td>
+                              <td></td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-xl-12">
+         <div class="card">
+            <div class="card-header">
+               <h4 class="card-title">FAQ</h4>
+            </div>
+            <div class="card-body">
+               <div id="accordion-faq" class="accordion">
+                  <div class="card">
+                     <div class="card-header">
+                        <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="false" aria-controls="collapseOne1"><i class="fa" aria-hidden="true"></i>
+                           How do i fund my Portfolio ?
+                        </h4>
+                     </div>
+                     <div id="collapseOne1" class="collapse show" data-parent="#accordion-faq">
+                        <div class="card-body">
+                           As a complete beginner, you should take the following steps to successfully purchase bitcoins and subsequently deposit it into one of your existing investment Portofolios with us.<br>
+                           <div class="terms_condition-text">
+                              <ul>
+                                 <li>
+                                    <i class="fa fa-circle"></i>
+                                    <p><b>Create your own wallet</b><br>Here are a few examples of places you can create a wallet.
+                                       There are also tutorial videos to get you started.<br><a href="https://www.exodus.io/" target="_blank"><u>www.exodus.io</u></a> <br>
+                                       <a href="https://www.blockchain.com/" target="_blank"><u>www.blockchain.com</u></a><br>
+                                       <a class="popup-youtube" href="https://www.youtube.com/watch?v=6SiZHOa_0Ew" style="color:#5e72e4;">Tutorial video(create):
+                                       <i class="fa fa-play" style="color:#5e72e4;"></i></a><br><br>Your wallet is like your personal bitcoin bank account.
+                                       Whenever you purchase bitcoins online, it is sent to your wallet address and you can thereafter send from your own wallet into your
+                                       Lidocoin portfolio. Also, whenever you withdraw funds from your Lidocoin portfolio, it is sent to your specified wallet address where you have complete and anonymous control.
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <i class="fa fa-circle"></i>
+                                    <p><b>Purchase bitcoins online.</b><br>
+                                       Upon creation of your own personal wallet, the next step is to fund your wallet by buying bitcoins online using any/all of the options below.
+                                       <br> Each option has varying payment methods(credit/debit cards, bank transfers, POLi, cash, e.t.c)
+                                       <br> Here are a few examples with simple to follow tutorial vidoes;<br>
+                                       <a href="https://www.binance.com/" target="_blank"><u>www.binance.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=15oKacmTUTA" style="color:#5e72e4;">Video:
+                                       <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                       <a href="https://www.coinbase.com/" target="_blank"><u>www.coinbase.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=O1KaAboPX44" style="color:#5e72e4;">Video:
+                                       <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                       <a href="https://www.gemini.com/" target="_blank"><u>www.gemini.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=ZnnHDlU00F0" style="color:#5e72e4;">Video:
+                                       <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                       <a href="https://www.coinmama.com/" target="_blank"><u>www.coinmama.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=3SorAose5TU" style="color:#5e72e4;">Video:
+                                       <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                       <a href="https://www.localbitcoins.com/" target="_blank"><u>www.localbitcoins.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=w2qZT1-9UdY" style="color:#5e72e4;">Video:
+                                       <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                       <a href="https://www.coinspot.com.au/" target="_blank"><u>www.coinspot.com.au</u> (AU)</a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=CyyQSjSYttM" style="color:#5e72e4;">Video:
+                                       <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                    </p>
+                                 </li>
+                                 <li>
+                                    <i class="fa fa-circle"></i>
+                                    <p><b>Fund your portfolio</b><br>First, you click on DEPOSIT and choose how much bitcoin to deposit into your Lidocoin portfolio.
+                                       Our systems will generate a bitcoin receiving address that is directly linked to your portfolio.<br> Simply head over to one of your personal wallet
+                                       and send the applicable amount to the bitcoin address displayed on your Lidocoin checkout screen.<br>
+                                       You do not have to deposit all the funds at a go, Let's say you created a deposit of 0.5 BTC, you can choose to send any
+                                       fraction of the amount and it will be immediately reflected in your portfolio balance.
+                                       <br> Here is an easy video tutorial on sending bitcoin from your own wallet<br>
+                                       <a class="popup-youtube" href="https://www.youtube.com/watch?v=15oKacmTUTA" style="color:#5e72e4;">Tutorial video(send):
+                                       <i class="fa fa-play" style="color:#5e72e4;"></i></a>
+                                       <br><i>Please note that Bitcoin-Cash(BCH) is different from Bitcoin(BTC).
+                                       Payments sent from a BCH wallet to a BTC wallet will not reflect and funds will be lost.</i>
+                                    </p>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card">
+                     <div class="card-header">
+                        <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2"><i class="fa" aria-hidden="true"></i>How
+                           do i withdraw from my Portfolio ?
+                        </h4>
+                     </div>
+                     <div id="collapseTwo2" class="collapse" data-parent="#accordion-faq">
+                        <div class="card-body">Withrawing your from your Lidocoin Portfolio is very easy and straight-forward.<br>
+                           First, you click on WITHDRAW and select the portfolio to withdraw funds from.<br> Next, you provide your destination wallet address or bank account and the amount of bitcoin to withdraw.<br>
+                           That's it. you should receive your bitcoins in your destination wallet within a few minutes depending on network load or within 3 business days if sent to your bank account.<br>
+                           <i>Funds sent to a bitcoin wallet is completely untraceable and there's absolutely no way to recall/refund the money. Hence, you must make sure to double-check your recipient wallet.</i>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card">
+                     <div class="card-header">
+                        <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseThree3" aria-expanded="false" aria-controls="collapseThree3"><i class="fa" aria-hidden="true"></i>
+                           Can i withdraw before tenure maturity ?
+                        </h4>
+                     </div>
+                     <div id="collapseThree3" class="collapse" data-parent="#accordion-faq">
+                        <div class="card-body">Yes, you can withdraw your bitcoin at any time. However, if you choose to withdraw before the maturity of your portfolio,
+                           no interest will be paid on your investments.<br>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card">
+                     <div class="card-header">
+                        <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseThree4" aria-expanded="false" aria-controls="collapseThree4"><i class="fa" aria-hidden="true"></i>
+                           When does my tenure count start ?
+                        </h4>
+                     </div>
+                     <div id="collapseThree4" class="collapse" data-parent="#accordion-faq">
+                        <div class="card-body">Your tenure starts counting the moment you make deposits equal or above the initial contract.
+                           Whenever your balance falls below the initial contract(As a result of withdrawals) your tenure count will reset and will
+                           again start counting from the beginning the moment your balance equals or exceeds the initial contract amount.
+                           <br>Anytime you make portfolio withdrawal/deposit, your tenure count is resetted.
+                           This also applies to withdrawals/deposits that doesn't take your portfolio balance below below initial contract amount.
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card">
+                     <div class="card-header">
+                        <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseThree5" aria-expanded="false" aria-controls="collapseThree5"><i class="fa" aria-hidden="true"></i>
+                           How much do i earn if deposit is above initial contract ?
+                        </h4>
+                     </div>
+                     <div id="collapseThree5" class="collapse" data-parent="#accordion-faq">
+                        <div class="card-body">If you created a portfolio for say 10 BTC and ended up funding it with 12 BTC, at the end of your chosen tenure, your interest will be calculated with 12 BTC.</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+<div class="footer">
+   <div class="container">
+      <div class="row">
+         <div class="col-xl-6 col-md-6"></div>
+         <div class="col-xl-6 col-md-6 text-lg-right text-center">
+            <div class="social"></div>
+         </div>
+      </div>
+      <div class="row align-items-center">
+         <div class="col-xl-12 text-center text-lg-right">
+            <div class="copy_right text-center text-lg-center">
+               © 2023 YellowStone Finance Ltd.
+               <br> (UK Registration: 07882177)
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+<div id="ajaxloader" style="display: none;">
+   <div id="ajaxpreloader">
+      <div class="ajaxsk-three-bounce">
+         <div class="sk-child "><img src="{% static 'fonts/ripple.svg' %}"></div>
+      </div>
+   </div>
+</div>
+<script>
+   function preLoader(y){
+       if(y=="on"){
+           document.getElementById('ajaxloader').style.display="block";
+       }
+       if(y=="off"){
+           document.getElementById('ajaxloader').style.display="none";
+       }
+   }
+   function navigate(link){
+       preLoader('on');
+       window.location.href=link;
+   }
+</script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/waves.min.js' %}"></script>
+<script src="{% static 'js/magnific-popup.js' %}"></script>
+<script src="{% static 'js/magnific-popup-init.js' %}"></script>
+<script src="{% static 'js/scripts.js' %}"></script>
+<script id="badgeScript" src="{% static 'js/checkMessages.js' %}"></script>
+<script id="payChecker" invoice="QY1K8rWpn3mNJLtY6NCu8L" src="{% static 'js/checkInvoicePayments.js' %}"></script>
+<script>
+   function move() {
+      thisWidth = 0;
+      var elem = document.getElementById("prog");
+      var expiry = document.getElementById("expiry");
+      thisId = setInterval(frame, 1000);
+   
+      function frame() {
+         var now = new Date().getTime();
+         //var end = 1615804314*1000;
+         var end = 1690831764 * 1000;
+         var start = 1690658964 * 1000;
+         var finaldiff = end - start;
+         var progdiff = now - start;
+         thisWidth = (progdiff * 100) / finaldiff;
+   
+   
+         // Find the distance between now and the count down date
+         var distance = end - now;
+         // Time calculations for days, hours, minutes and seconds
+         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+         var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+         var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+         var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+   
+   
+         if (thisWidth >= 100) {
+            clearInterval(thisId);
+            elem.style.width = thisWidth + '%';
+            expiry.innerHTML = "Invoice expired";
+            expiry.style.color = "#e82753";
+            elem.style.background = "#e82753";
+            return;
+         } else {
+            if (thisWidth >= 95.833) { //apprx 2hrs left
+               thisWidth++;
+               elem.style.width = thisWidth + '%';
+               expiry.innerHTML = "Expiring soon: " + hours + "h " + minutes + "m " + seconds + "s ";
+               expiry.style.color = "#e82753";
+               elem.className = "expiring";
+               elem.style.background = "#e82753";
+               return;
+            }
+            thisWidth++;
+            elem.style.width = thisWidth + '%';
+            expiry.innerHTML = "Expiring: " + days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+         }
+      }
+   }
+   move();
+               
+</script>
+<script>
+   function copyFn() {
+   
+   var address = document.getElementById("address");
+   var range = document.createRange();
+   range.selectNode(document.getElementById("address"));
+   window.getSelection().removeAllRanges(); // clear current selection
+   window.getSelection().addRange(range); // to select text
+   document.execCommand("copy");
+   window.getSelection().removeAllRanges(); // to deselect
+   var copyText = document.getElementById("copyText").innerHTML = " Copied to clipboard";
+   }
+</script>
+<script id="payChecker" invoice="QY1K8rWpn3mNJLtY6NCu8L" src="{% static 'js/checkInvoicePayments.js' %}"></script>
+<script>
+   function checkPayments() {
+   
+         const bitcoinAddress = document.getElementById('address').innerHTML;
+   
+         const apiUrl = `https://blockstream.info/api/address/${bitcoinAddress}/txs`;
+   
+         fetch(apiUrl)
+         .then(response => response.json())
+         .then(transactions => {
+   
+         const listItem = document.createElement('li');
+   
+         if(transactions.length != 0){
+            clearInterval(checkPayment)
+   
+            amountReceived = transactions[0].vout.reduce((total, output) => total + output.value, 0); 
+            $.ajax({
+               url: "{% url 'update_payment' %}",
+               type: "GET",
+               dataType:'json',
+               data: {
+                  id:"{{invoice.id}}",
+                  received : amountReceived
+               },
+               success: function(response){
+                  console.log(amountReceived + " BTC received, redirect now")
+                  document.getElementById('tableResults').innerHTML = "Payment Successful!"
+                  // window.location.href="/dashboard"
+            }});
+         
+         }else{
+   
+            console.log("No payment yet")
+   
+         }
+   
+         })
+         .catch(error => {
+         console.error('Error:', error);
+         // alert('An error occurred while fetching transaction data.');
+         });
+   }
+   
+   checkPayments() 
+   
+   // Check for payments every X seconds
+   const checkInterval = 10000; // 1 minute
+   var checkPayment = setInterval(checkPayments, checkInterval);
+   
+   
+</script>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<div class="homepage mb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 ">
+                <div class="card" style="background:#f7f8fa;">
+                <div class="card-header border-0 pb-0">
+                    <h4 class="card-title">Inbox</h4> 
+                    <a href="#"> </a>
+                </div>
+                <div class="card-body">
+                    <div class="container bootdey">
+                        <div class="email-app">
+                            <nav>
+                            <a href="/compose" class="btn btn-primary btn-block waves-effect"><i class="fa fa-edit"></i> Compose</a>
+                            <ul class="nav">
+                                <li class="nav-item active" style="border-bottom-color: #2f2cd8;opacity:0.75">
+                                    <a class="nav-link active" href="/messages" style="color:#2f2cd8;"><i class="fa fa-envelope"></i> Inbox <span id="inboxBadge" class="badge badge-danger" style="display:none;"></span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/sentmessages"><i class="fa fa-send"></i> Sent</a>
+                                </li>
+                            </ul>
+                            </nav>
+                            <main>
+                                <div class="col-lg-9 email-content">
+                                   <div class="email-head">
+                                      <div class="email-head-subject">
+                                         <div class="title d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center" style="width:100%;background:#edf2f7;">
+                                               <table style="width:100%;font-size: .90em;
+                                                  line-height: 1.5em;
+                                                  text-align: left;margin:15px;">
+                                                  <tbody>
+                                                     <tr>
+                                                        <td><b></b></td>
+                                                        <td align="right"><a href="/reply/{{message.id}}" class=" btn-sm btn-primary waves-effect" style="opacity:0.75;"><i class="fa fa-reply"></i> Reply</a></td>
+                                                     </tr>
+                                                     <tr>
+                                                        <td style="white-space:nowrap;width:15%"><b>From</b></td>
+                                                        <td>{{message.from_user}}</td>
+                                                     </tr>
+                                                     <tr>
+                                                        <td style="white-space:nowrap;width:15%"><b>To</b></td>
+                                                        <td>{{message.to_user}}</td>
+                                                     </tr>
+                                                     <tr>
+                                                        <td><b>Date</b></td>
+                                                        <td>{{message.message_date}}</td>
+                                                     </tr>
+                                                     <tr>
+                                                        <td><b>Subject</b></td>
+                                                        <td>{{message.subject}}</td>
+                                                     </tr>
+                                                  </tbody>
+                                               </table>
+                                            </div>
+                                         </div>
+                                      </div>
+                                   </div>
+                                   <div class="email-body" style="color:grey;margin:10px;">
+                                       {{message.message_body|safe}}
+                                   </div>
+                                   <div class="email-attachments"></div>
+                                </div>
+                             </main>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

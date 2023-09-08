@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coinreef </title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/waves.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <div id="ajaxpreloader" style="display: none;">
+        <div class="ajaxsk-three-bounce">
+            <div class="sk-child "><img src="{% static 'fonts/ripple.svg' %}"></div>   
+        </div>
+    </div>
+
+    <div id="main-wrapper" class="show">
+
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                    <nav class="navbar navbar-expand-lg navbar-light px-0 justify-content-between">
+                            <a class="navbar-brand" href="/"><img src="{% static 'images/w_logo.png' %}" alt="">
+                                <span>Coinreef</span></a>
+                                <span class="mobalert">  <table style="padding: 5px;width: 100%"> <tbody><tr>
+                                      <td style="padding-right:10px;" align="right"><a href="/signin" class="btn btn-success waves-effect">Sign In</a>
+</td>
+                                      <td style="padding-left:10px;" align="left">
+                                        </td>
+</tr></tbody></table></span>
+                            <div class="dashboard_log">
+                                <div class="d-flex align-items-center">
+                                    
+                                    <div class="header_auth">
+                                    <a href="/signin" class="btn btn-success waves-effect">Sign In</a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="authincation section-padding">
+            <div class="container h-100">
+                <div class="row justify-content-center h-100 align-items-center">
+                    <div class="col-xl-4 col-md-6">
+                        <div class="auth-form card">
+                            <div class="card-header justify-content-center">
+                                <h4 class="card-title">Sign Up</h4>
+                            </div>
+                            <div id="errorBox" class="alert alert-danger show flex items-center mb-2" style="display: none;">
+                                
+                            </div>
+                            <div class="card-body">
+                                We are currently not accepting new 
+sign-ups at the moment. Please check back at a later date when our 
+windows are opened for new investors.
+                                <div class="new-account mt-3">
+                                    <p>Have an account? <a class="text-primary" href="/signin">Sign
+                                            in</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-md-6">
+                        <div class="footer-link text-left">
+                            <a href="#" class="m_logo"><img src="{% static 'images/w_logo.png' %}" alt=""></a>
+                            <a href="/about">About</a>
+                            <a href="#" >Privacy Policy</a>
+                            <a href="#">Term &amp; Service</a>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-6 text-lg-right text-center">
+                        <div class="social">
+                                                                        
+                                                            </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-xl-12 text-center text-lg-right">
+                        <div class="copy_right text-center text-lg-center">
+                            © 2023 First Sentier Investors Funds Ltd.
+                            <br> (UK Registration: 02294743)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="bg_icons"></div>
+    <div id="ajaxloader" style="display: none;">
+        <div id="ajaxpreloader">
+            <div class="ajaxsk-three-bounce">
+                <div class="sk-child "><img src="{% static 'fonts/ripple.svg' %}"></div>
+                
+            </div>
+        </div>
+    </div>
+    <script>
+        function preLoader(y){
+            if(y=="on"){
+                document.getElementById('ajaxloader').style.display="block";
+            }
+            if(y=="off"){
+                document.getElementById('ajaxloader').style.display="none";
+            }
+        }
+        function navigate(link){
+            preLoader('on');
+            window.location.href=link;
+        }
+    </script>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/waves.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.validate.js' %}"></script>
+    <script src="{% static 'js/validator-init.js' %}"></script>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <div id="ajaxloader" style="display: none;">
+    <div id="ajaxpreloader">
+        <div class="ajaxsk-three-bounce">
+            <div class="sk-child "><img src="{% static 'fonts/ripple.svg' %}"></div>
+            
+        </div>
+    </div>
+</div>
+<script>
+    function login(){
+        
+        var password=document.getElementById('password').value;
+        document.getElementById('ajaxloader').style.display='block'; //blocks screen
+        
+        var customerId=document.getElementById('customerId').value;
+        var staticVariable="isPosted"; //prevents empty post
+
+           // AJAX CALL
+  $.ajax({
+	
+    type:"post",
+    url:"script/login.php",
+    datatype:"json",
+    data: {customerId: customerId, password: password, static: staticVariable},
+    success:function(respnx)
+    {
+    response = JSON.parse(respnx);
+    
+    if(response['error']=="yes"){
+    document.getElementById('errorBox').style.display='block';
+    document.getElementById('errorBox').innerHTML=response['errorMsg'];
+    document.getElementById('ajaxloader').style.display='none';
+    return;
+      }
+
+    if(response['success']=="yes"){
+    window.location.href=response['goto'];
+    return;
+    }
+         
+      
+    
+   },
+       error: function(badx)
+       {
+        document.getElementById('errorBox').style.display='block';
+    document.getElementById('errorBox').innerHTML="An unexpected error occurred, please check your internet connection and try again.";
+    document.getElementById('ajaxloader').style.display='none';  
+       }
+      
+  });
+    }
+</script>
+
+
+</body></html>

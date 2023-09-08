@@ -1,0 +1,288 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<div class="homepage mb-80">
+   <div class="container">
+      <div class="row">
+         <div class="col-xl-9 col-lg-9 col-md-12">
+            <div class="card profile_card">
+               <div class="card-body">
+                  <div class="media">
+                     <div class="media-body">
+                        <h4 class="mb-2">Portfolio Summary</h4>
+                     </div>
+                  </div>
+                  <table class="table" style="background:#e4e9f0;" width="80%" align="center">
+                     <tbody>
+                        <tr>
+                           <td align="right">
+                              <div>
+                                 <p class="mb-1">Overall Portfolios</p>
+                                 <h4>{{portfolio_count}}</h4>
+                                 <h4></h4>
+                              </div>
+                           </td>
+                           <td align="left">
+                              <div>
+                                 <p class="mb-1">Overall Balance</p>
+                                 <h4>{{portfolio_balance.balance}} BTC</h4>
+                              </div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="right">
+                              <div>
+                                 <p class="mb-1">Active Portfolios</p>
+                                 <h4>{{active_portfolios}}</h4>
+                              </div>
+                           </td>
+                           <td align="left">
+                              <div>
+                                 <p class="mb-1">Settled Portfolios</p>
+                                 <h4>{{settled_portfolios}}</h4>
+                              </div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="right">
+                              <div>
+                                 <p class="mb-1">Total Deposits</p>
+                                 <h4>Calculate here BTC</h4>
+                              </div>
+                           </td>
+                           <td align="left">
+                              <div>
+                                 <p class="mb-1">Total Withdrawals</p>
+                                 <h4>Calculate here BTC</h4>
+                              </div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <div class="media" style="width:60%;margin:auto">
+                     <a href="/create"class="btn btn-primary btn-block waves-effect"><i class="fa fa-plus"></i>&nbsp;&nbsp;New Portfolio</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+         {% for portfolio in portfolios %}
+         <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="card acc_balance" style="background:#f7f8fa;">
+               <div class="card-header">
+                  <h4 class="card-title">{{ portfolio.portfolio_name }}</h4>
+               </div>
+               <div class="card-body">
+                  <span>Available BTC</span>
+                  <h3>{{portfolio.available}} BTC</h3>
+                  <div class="d-flex justify-content-between my-4">
+                     <div>
+                        <p class="mb-1">Setup Date</p>
+                        <h4>{{portfolio.setupdate}}</h4>
+                     </div>
+                     <div align="right">
+                        <p class="mb-1">Tenure</p>
+                        <h4>{{portfolio.tenure}}</h4>
+                     </div>
+                  </div>
+                  <div class="d-flex justify-content-between my-4">
+                     <div>
+                        <p class="mb-1">Initial Contract</p>
+                        <h4>{{portfolio.investment_amount}} BTC</h4>
+                     </div>
+                     <div align="right">
+                        <p class="mb-1">Rate</p>
+                        <h4>{{portfolio.rate}} %</h4>
+                     </div>
+                  </div>
+                  <div class="d-flex justify-content-between my-4">
+                     <div>
+                        <p class="mb-1">Deposits</p>
+                        <h4 style="color:green;opacity:0.55">+Calculate here BTC</h4>
+                     </div>
+                     <div align="right">
+                        <p class="mb-1">Withdrawals</p>
+                        <h4 style="color:red;opacity:0.55">-Calculate here BTC</h4>
+                     </div>
+                  </div>
+                  <div class="d-flex justify-content-between my-4">
+                     <div>
+                        <p class="mb-1">Status</p>
+                        <h4>{{portfolio.status}}</h4>
+                     </div>
+                     <div align="right">
+                        <p class="mb-1">Remarks</p>
+                        <h4>{{portfolio.remarks}}</h4>
+                     </div>
+                  </div>
+                  <div class="btn-group mb-3">
+                     {% if portfolio.status ==  "Settled" %}
+                        
+                     {% elif portfolio.available == 0 %}
+                        <a href="/deposit/{{portfolio.id}}" class="btn btn-success waves-effect"><i class="fa fa-arrow-down">&nbsp;</i>Deposit</a>
+                     {% elif portfolio.available >  0 %}
+                        <a href="/deposit/{{portfolio.id}}" class="btn btn-success waves-effect"><i class="fa fa-arrow-down">&nbsp;</i>Deposit</a>
+                        <a href="/withdraw/{{portfolio.id}}" class="btn btn-primary btn-sm waves-effect"><i class="fa fa-arrow-up">&nbsp;</i>Withdraw</a>                        
+                     {% endif %}                                                                   
+                  </div>
+               </div>
+            </div>
+         </div>
+         {% endfor %}            
+      </div>
+      <div class="row">
+         <div class="col-xl-12">
+            <div class="card">
+               <div class="card-header">
+                  <h4 class="card-title">FAQ</h4>
+               </div>
+               <div class="card-body">
+                  <div id="accordion-faq" class="accordion">
+                     <div class="card">
+                        <div class="card-header">
+                           <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="false" aria-controls="collapseOne1"><i class="fa" aria-hidden="true"></i>
+                              How do i fund my Portfolio ?
+                           </h4>
+                        </div>
+                        <div id="collapseOne1" class="collapse show" data-parent="#accordion-faq">
+                           <div class="card-body">
+                              As a complete beginner, you 
+                              should take the following steps to successfully purchase bitcoins and 
+                              subsequently deposit it into one of your existing investment Portofolios
+                              with us.<br>
+                              <div class="terms_condition-text">
+                                 <ul>
+                                    <li>
+                                       <i class="fa fa-circle"></i>
+                                       <p><b>Create your own wallet</b><br>Here are a few examples of places you can create a wallet. 
+                                          There are also tutorial videos to get you started.<br><a href="https://www.exodus.io/" target="_blank"><u>www.exodus.io</u></a> <br>
+                                          <a href="https://www.blockchain.com/" target="_blank"><u>www.blockchain.com</u></a><br>
+                                          <a class="popup-youtube" href="https://www.youtube.com/watch?v=6SiZHOa_0Ew" style="color:#5e72e4;">Tutorial video(create): 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br><br>Your
+                                          wallet is like your personal bitcoin bank account.
+                                          Whenever you purchase bitcoins 
+                                          online, it is sent to your wallet address and you can thereafter send 
+                                          from your own wallet into your
+                                          Coinreef portfolio. Also, whenever 
+                                          you withdraw funds from your Coinreef portfolio, it is sent to your 
+                                          specified wallet address where you have complete and anonymous control.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <i class="fa fa-circle"></i>
+                                       <p><b>Purchase bitcoins online.</b><br>
+                                          Upon creation of your own 
+                                          personal wallet, the next step is to fund your wallet by buying bitcoins
+                                          online using any/all of the options below.
+                                          <br> Each option has varying payment methods(credit/debit cards, bank transfers, POLi, cash, e.t.c)
+                                          <br> Here are a few examples with simple to follow tutorial vidoes;<br>
+                                          <a href="https://www.binance.com/" target="_blank"><u>www.binance.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=15oKacmTUTA" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                          <a href="https://www.coinbase.com/" target="_blank"><u>www.coinbase.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=O1KaAboPX44" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                          <a href="https://www.gemini.com/" target="_blank"><u>www.gemini.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=ZnnHDlU00F0" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>    
+                                          <a href="https://www.coinmama.com/" target="_blank"><u>www.coinmama.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=3SorAose5TU" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                          <a href="https://www.localbitcoins.com/" target="_blank"><u>www.localbitcoins.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=w2qZT1-9UdY" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>        
+                                          <a href="https://www.coinspot.com.au/" target="_blank"><u>www.coinspot.com.au</u> (AU)</a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=CyyQSjSYttM" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>          
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <i class="fa fa-circle"></i>
+                                       <p><b>Fund your portfolio</b><br>First, you click on DEPOSIT and choose how much bitcoin to deposit into your Coinreef portfolio.
+                                          Our systems will generate a bitcoin receiving address that is directly linked to your portfolio.<br> Simply head over to one of your personal wallet 
+                                          and send the applicable amount to the bitcoin address displayed on your Coinreef checkout screen.<br>
+                                          You do not have to deposit all the funds at a go, Let's say you created a deposit of 0.5 BTC, you can choose to send any
+                                          fraction of the amount and it will be immediately reflected in your portfolio balance.
+                                          <br> Here is an easy video tutorial on sending bitcoin from your own wallet<br>
+                                          <a class="popup-youtube" href="https://www.youtube.com/watch?v=15oKacmTUTA" style="color:#5e72e4;">Tutorial video(send): 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a>
+                                          <br><i>Please note that Bitcoin-Cash(BCH) is different from Bitcoin(BTC).
+                                          Payments sent from a BCH wallet to a BTC wallet will not reflect and funds will be lost.</i>
+                                       </p>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card">
+                        <div class="card-header">
+                           <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2"><i class="fa" aria-hidden="true"></i>How
+                              do i withdraw from my Portfolio ?
+                           </h4>
+                        </div>
+                        <div id="collapseTwo2" class="collapse" data-parent="#accordion-faq">
+                           <div class="card-body">Withrawing your from your Coinreef Portfolio is very easy and straight-forward.<br>
+                              First, you click on WITHDRAW and select the portfolio to withdraw funds from.<br> Next, you provide your destination wallet address or bank account and the amount of bitcoin to withdraw.<br>
+                              That's it. you should 
+                              receive your bitcoins in your destination wallet within a few minutes 
+                              depending on network load or within 3 business days if sent to your bank
+                              account.<br>
+                              <i>Funds sent to a bitcoin 
+                              wallet is completely untraceable and there's absolutely no way to 
+                              recall/refund the money. Hence, you must make sure to double-check your 
+                              recipient wallet.</i>  
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card">
+                        <div class="card-header">
+                           <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseThree3" aria-expanded="false" aria-controls="collapseThree3"><i class="fa" aria-hidden="true"></i>
+                              Can i withdraw before tenure maturity ?
+                           </h4>
+                        </div>
+                        <div id="collapseThree3" class="collapse" data-parent="#accordion-faq">
+                           <div class="card-body">Yes, you can withdraw your bitcoin at any time. However, if you choose to withdraw before the maturity of your portfolio,
+                              no interest will be paid on your investments.<br>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card">
+                        <div class="card-header">
+                           <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseThree4" aria-expanded="false" aria-controls="collapseThree4"><i class="fa" aria-hidden="true"></i>
+                              When does my tenure count start ?
+                           </h4>
+                        </div>
+                        <div id="collapseThree4" class="collapse" data-parent="#accordion-faq">
+                           <div class="card-body">Your 
+                              tenure starts counting the moment you make deposits equal or above the 
+                              initial contract. 
+                              Whenever your balance falls 
+                              below the initial contract(As a result of withdrawals) your tenure count
+                              will reset and will
+                              again start counting from 
+                              the beginning the moment your balance equals or exceeds the initial 
+                              contract amount.
+                              <br>Anytime you make 
+                              portfolio withdrawal/deposit, your tenure count is resetted.
+                              This also applies to 
+                              withdrawals/deposits that doesn't take your portfolio balance below 
+                              below initial contract amount.
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card">
+                        <div class="card-header">
+                           <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseThree5" aria-expanded="false" aria-controls="collapseThree5"><i class="fa" aria-hidden="true"></i>
+                              How much do i earn if deposit is above initial contract ?
+                           </h4>
+                        </div>
+                        <div id="collapseThree5" class="collapse" data-parent="#accordion-faq">
+                           <div class="card-body">If 
+                              you created a portfolio for say 10 BTC and ended up funding it with 12 
+                              BTC, at the end of your chosen tenure, your interest will be calculated 
+                              with 12 BTC.
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

@@ -1,0 +1,786 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>
+         {% block title %}
+         Coinreef
+         {% endblock %}
+      </title>
+      <!-- Favicon icon -->
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+      <!-- Custom Stylesheet -->
+      <link rel="stylesheet" href="{% static 'css/waves.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/toastr.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <link rel="stylesheet" href="{% static 'css/rte_theme_default.css' %}">
+      <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+      <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      <style>
+      </style>
+   </head>
+   <body class="dashboard">
+      <div id="ajaxpreloader" style="display: none;">
+         <div class="ajaxsk-three-bounce">
+            <div class="sk-child "><img src="{% static 'fonts/ripple.svg' %}"></div>
+         </div>
+      </div>
+      <div id="main-wrapper" class="show">
+         <div class="header dashboard">
+            <div class="container">
+               <div class="row">
+                  <div class="col-xl-12">
+                     <nav class="navbar navbar-expand-lg navbar-light px-0">
+                        <a class="navbar-brand" href="#" onclick="navigate('/dashboard');"><img src="{% static 'images/w_logo.png' %}" alt=""></a>
+                        <button class="navbar-toggler waves-effect" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                           <ul class="navbar-nav">
+                              <li class="nav-item">
+                                 <a class="nav-link" id="dashboard_link" href="#" onclick="navigate('/dashboard');">Dashboard</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" id="deposit_link" href="#" onclick="navigate('/deposit');">Deposit</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" id="withdraw_link" href="#" onclick="navigate('/withdraw');">Withdraw</a>
+                              </li>
+                              <li class="nav-item">
+                                 <a class="nav-link" id="portfolio_link" href="#" onclick="navigate('/portfolio');">Portfolio</a>
+                              </li>
+                              <span class="mobalert">
+                                 <table style="padding: 5px;width: 100%;color: white;">
+                                    <tbody>
+                                       <tr>
+                                          <td style="padding-right:10px;" align="right">Balance</td>
+                                          <td style="padding-left:10px;" align="left"></td>
+                                       </tr>
+                                       <tr>
+                                          <td style="padding-right:10px;" align="right">
+                                             <li class="crypto">
+                                                <span>200.0004</span>
+                                                <i class="cc BTC-alt"></i>
+                                             </li>
+                                          </td>
+                                          <td style="padding-left:10px;" align="left">
+                                             <li class="usd">
+                                                <span>5,306,082.61 €</span>
+                                             </li>
+                                          </td>
+                                       </tr>
+                                    </tbody>
+                                 </table>
+                              </span>
+                           </ul>
+                        </div>
+                        <div class="dashboard_log my-2">
+                           <div class="d-flex align-items-center">
+                              <div class="account_money">
+                                 <ul>
+                                    <li class="crypto">
+                                       <span>200.0004</span>
+                                       <i class="cc BTC-alt"></i>
+                                    </li>
+                                    <li class="usd">
+                                       <span>5,306,082.61 €</span>
+                                    </li>
+                                 </ul>
+                              </div>
+                              <div class="profile_log dropdown">
+                                 <div class="user" data-toggle="dropdown">
+                                    <span class="thumb"><i class="la la-user"></i><span id="menuBadge" class="badge" style="display:none;"></span></span>
+                                    <span class="name">Private User</span>
+                                    <span class="arrow"><i class="la la-angle-down"></i></span>
+                                 </div>
+                                 <div class="dropdown-menu dropdown-menu-right">
+                                    <a href="#" onclick="navigate('/messages');" class="dropdown-item">
+                                    <i class="la la-envelope"></i> Messages 
+                                    <span id="dropdownBadge" class="badge" style="background-color:#6610f2;color:#fff;display:none;top: -20px;width:60%;margin:auto;"></span>
+                                    </a>
+                                    <a href="#" onclick="navigate('/transactions');"  class="dropdown-item">
+                                    <i class="la la-th-list"></i> Transactions
+                                    </a>
+                                    <a href="#" onclick="navigate('/settings');" class="dropdown-item">
+                                    <i class="la la-cog"></i> Settings
+                                    </a>
+                                    <a href="#" onclick="navigate('/signout');" class="dropdown-item logout">
+                                    <i class="la la-sign-out"></i> Logout
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </nav>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="page_title section-padding">
+            <div class="container">
+               <div class="row">
+                  <div class="col-xl-12">
+                     <div class="page_title-content">
+                        <p>Welcome Back,
+                           <span> Private User</span>
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         {% block content %}
+         {% endblock %}
+         <div class="footer">
+            <div class="container">
+               <div class="row">
+                  <div class="col-xl-6 col-md-6">
+                  </div>
+                  <div class="col-xl-6 col-md-6 text-lg-right text-center">
+                     <div class="social">
+                     </div>
+                  </div>
+               </div>
+               <div class="row align-items-center">
+                  <div class="col-xl-12 text-center text-lg-right">
+                     <div class="copy_right text-center text-lg-center">
+                        © 2023 First Sentier Investors Funds Ltd.
+                        <br> (UK Registration: 02294743)
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="ajaxloader" style="display: none;">
+         <div id="ajaxpreloader">
+            <div class="ajaxsk-three-bounce">
+               <div class="sk-child "><img src="{% static 'fonts/ripple.svg' %}"></div>
+            </div>
+         </div>
+      </div>
+      <div id="addModal" class="modal" style="display:none">
+         <div class="col-xl-4 col-md-6 modal-content">
+            <form id="addform" method="post" action="addressbook.php" target="_parent" />
+               <input type="hidden" name="country_iso" id="country_iso" value="" />
+               <input type="hidden" name="country_name" id="country_name" value="" />
+               <input type="hidden" name="currency_name" id="currency_name" value="" />
+               <input type="hidden" name="currency_code" id="currency_code" value="" />
+               <input type="hidden" name="flag" id="flag" value="" />
+               <input type="hidden" name="ibancheck" id="ibancheck" value="" />
+               <input type="hidden" name="iban_field" id="iban_field" value="no" />
+               <input type="hidden" name="bank_field" id="bank_field" value="" />
+               <input type="hidden" name="account_number_field" id="account_number_field" value="" />
+               <input type="hidden" name="bsb_field" id="bsb_field" value="" />
+               <input type="hidden" name="routing_field" id="routing_field" value="" />
+               <input type="hidden" name="sortcode_field" id="sortcode_field" value="" />
+               <input type="hidden" name="swift_field" id="swift_field" value="" />
+               <input type="hidden" name="hide_swift_field" id="hide_swift_field" value="" />
+               <input type="hidden" name="extra1" id="extra1" value="" />
+               <input type="hidden" name="extra2" id="extra2" value="" />
+               <input type="hidden" name="extra3" id="extra3" value="" />
+               <input type="hidden" name="account_name_field" id="account_name_field" value="" />
+               <input type="hidden" name="address_field" id="address_field" value="" />
+               <input type="hidden" name="email_field" id="email_field" value="" />
+               <input type="hidden" name="phone_field" id="phone_field" value="" />
+               <input type="hidden" name="city_field" id="city_field" value="" />
+               <input type="hidden" name="errors" id="errors" notes="not needed, just to store value outside non_ajax function" value="" />
+            </form>
+            <div class="auth-form card">
+               <a class="page-back text-muted" href="#" onclick="document.getElementById('addModal').style.display='none';"><span><i class="fa fa-close"></i></span> Close</a>
+               <div id="infomsg" class="alert alert-danger show flex items-center mb-2" style="display:none"></div>
+               <div id="successInfo" class="alert alert-success show flex items-center mb-2" style="display:none"></div>
+               <div class="card-body">
+                  <span id="addHeader" style="display:block">
+                     <h3 class="text-center">Add Beneficiary</h3>
+                     <p class="text-center mb-5">Add a new bank account for withdrawals<br />* You can only add one bank account *</p>
+                  </span>
+                  <span id="step1span" style="display:block">
+                     <div class="modal-body mx-3">
+                        <div class="md-form mb-5"><font color='red'><b>Sorry, bank account withdrawals are unavailable at the moment.<br />Kindly use the Bitcoin WALLET option for withdrawals.</b></font></div>
+                        <span id="step_1a" style="display:none">
+                           <div class="md-form mb-5">
+                              <input type="text" id="swiftfm" class="form-control" onFocus="document.getElementById('swiftfm').placeholder='LOYDGB2X';">
+                              <label onClick="document.getElementById('swiftfm').focus();">Swift/BIC code*</label>
+                           </div>
+                        </span>
+                     </div>
+                     <span id="step_1c" style="display:none">
+                     <button class="btn btn-default btn-block waves-effect" disabled="disabled"><i class="fa fa-spinner fa-spin"></i></button>
+                     </span>
+                     <span id="step_1b" style="display:none">
+                     <button class="btn btn-success btn-block waves-effect" onClick="iban_ajax('swift',document.getElementById('swiftfm').value)">Validate swift</button>
+                     </span>
+                  </span>
+                  <span id="step2span" style="display:none">
+                     <div class="modal-body mx-3">
+                        <table id="ibanresults" style="display:none">
+                           <tr>
+                              <td width="20%"><b>Bank</b></td>
+                              <td id="bank_name_field" width="80%"></td>
+                           </tr>
+                           <tr>
+                              <td><b>Address</b></td>
+                              <td id="bank_address_field"></td>
+                           </tr>
+                           <tr>
+                              <td><b>Country</b></td>
+                              <td id="bank_country_field"></td>
+                              <td id="bank_flag"><img id="bnkflag" src="" /></td>
+                           </tr>
+                           <tr>
+                              <td><b>&nbsp;</b></td>
+                           </tr>
+                        </table>
+                        <div class="md-form mb-4">
+                           <input type="text" id="ibanfm" class="form-control">
+                           <label onClick="document.getElementById('ibanfm').focus();">IBAN*</label>
+                        </div>
+                     </div>
+                     <span id="step_2c" style="display:none">
+                     <button class="btn btn-default btn-block waves-effect" disabled="disabled"><i class="fa fa-spinner fa-spin"></i></button>
+                     </span>
+                     <span id="step_2b" style="display:none">
+                     <button class="btn btn-success btn-block waves-effect" onClick="iban_ajax('iban',document.getElementById('ibanfm').value)">Validate IBAN</button>
+                     </span>
+                  </span>
+                  <span id="step2generic" style="display:none">
+                     <div class="modal-body mx-3">
+                        <table id="ibanresults2" style="display:none">
+                           <tr>
+                              <td width="20%"><b>Bank</b></td>
+                              <td id="bank_name_field2" width="80%"></td>
+                           </tr>
+                           <tr>
+                              <td><b>Address</b></td>
+                              <td id="bank_address_field2"></td>
+                           </tr>
+                           <tr>
+                              <td><b>Country</b></td>
+                              <td id="bank_country_field2"></td>
+                              <td id="bank_flag2"><img id="bnkflag2" src="" /></td>
+                           </tr>
+                           <tr>
+                              <td><b>&nbsp;</b></td>
+                           </tr>
+                        </table>
+                        <span id="field1" style="display:none">
+                           <div class="md-form mb-4">
+                              <input type="text" id="field1name" name="" class="form-control">
+                              <label id="field1label" onClick="document.getElementById('field1name').focus();"></label>
+                           </div>
+                        </span>
+                        <span id="field2" style="display:none">
+                           <div class="md-form mb-4">
+                              <input type="text" id="field2name" name="" class="form-control">
+                              <label id="field2label" onClick="document.getElementById('field2name').focus();"></label>
+                           </div>
+                        </span>
+                        <span id="field3" style="display:none">
+                           <div class="md-form mb-4">
+                              <input type="text" id="field3name" name="" class="form-control">
+                              <label id="field3label" onClick="document.getElementById('field3name').focus();"></label>
+                           </div>
+                        </span>
+                        <span id="field4" style="display:none">
+                           <div class="md-form mb-5">
+                              <select id="field4name" class="form-control" name="field4name">
+                                 <option value="">Select</option>
+                              </select>
+                           </div>
+                        </span>
+                     </div>
+                     <span id="step_2gc" style="display:none">
+                     <button class="btn btn-success btn-block waves-effect" disabled="disabled"><i class="fa fa-spinner fa-spin"></i></button>
+                     </span>
+                     <span id="step_2gb" style="display:none">
+                     <button class="btn btn-success btn-block waves-effect" id="genericbutton" onClick="iban_ajax('iban',document.getElementById('ibanfm').value)">Continue</button>
+                     </span>
+                  </span>
+                  <span id="step3span" style="display:none">
+                     <div class="modal-body mx-3">
+                        <div class="md-form mb-4">
+                           <input type="text" id="recipient_name" req="yes" class="form-control">
+                           <label id="recipient_name1" onClick="document.getElementById('recipient_name').focus();">Recipient name*</label>
+                        </div>
+                        <div class="md-form mb-4">
+                           <input type="text" id="recipient_email" name="" class="form-control">
+                           <label id="recipient_email1" onClick="document.getElementById('recipient_email').focus();">Recipient e-mail</label>
+                        </div>
+                        <div class="md-form mb-4">
+                           <input type="text" id="recipient_address" req="yes" name="" class="form-control">
+                           <label id="recipient_address1" onClick="document.getElementById('recipient_address').focus();">Recipient address*</label>
+                        </div>
+                        <div class="md-form mb-4">
+                           <input type="text" id="recipient_city" req="yes" name="" class="form-control">
+                           <label id="recipient_city1" onClick="document.getElementById('recipient_city').focus();">Recipient city*</label>
+                        </div>
+                     </div>
+                     <span id="step_3c" style="display:none">
+                     <button class="btn btn-default" disabled="disabled"><i class="fa fa-spinner fa-spin"></i></button>
+                     </span>
+                     <span id="step_3b" style="display:none">
+                     <button class="btn btn-success btn-block waves-effect" onClick="submitter();">Submit</button>
+                     </span>
+                  </span>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="authModal" class="modal" style="display:none">
+         <div class="col-xl-4 col-md-6 modal-content">
+            <div class="auth-form card">
+               <a class="page-back text-muted" href="#" onclick="document.getElementById('authModal').style.display='none';"><span><i class="fa fa-close"></i></span> Close</a>
+               <div id="infoMsgAuth" class="alert alert-danger show flex items-center mb-2" style="display:none"></div>
+               <div id="successMsgAuth" class="alert alert-success show flex items-center mb-2" style="display:none"></div>
+               <h3 class="text-center" id="authTitle">VERIFICATION REQUIRED</h3>
+               <div class="card-body">
+                  <span id="initInfo" style="display:block">
+                     <p class="text-center mb-5">For your protection, your account has been flagged for security verification as part of our routine security checks. You will be required to verify account ownership by providing details of one of your qualifying deposits into <b>Portfolio 2</b>.</p>
+                     <button class="btn btn-primary btn-block waves-effect" onClick="document.getElementById('initInfo').style.display='none';document.getElementById('initInfo2').style.display='block';
+                        document.getElementById('step_2Autha').style.display='block';
+                        document.getElementById('step_2Authb').style.display='none';">Continue</button>
+                  </span>
+                  <span id="initInfo2" style="display:none">
+                     <p class="text-center mb-5">Kindly provide the invoice wallet you sent any of the following qualified transactions to.( Only <b>one</b> is required)</p>
+                     <span id="tranx"></span>
+                     <span id="step_2Autha" style="display:block"><button class="btn btn-primary btn-block waves-effect" onClick="authVerify();">
+                     Complete Verification</button>
+                     </span>
+                     <span id="step_2Authb" style="display:none">
+                     <button class="btn btn-success btn-block waves-effect" disabled="disabled"><i class="fa fa-spinner fa-spin"></i></button>
+                     </span>
+                     <br /><br />
+                     <a onclick="document.getElementById('initInfo2').style.display='none';document.getElementById('initInfo3').style.display='block';" href="#"><b>Need alternative method ?</b></a>
+                  </span>
+                  <span id="initInfo3" style="display:none">
+                     <p class="text-center mb-5">
+                        In the very unlikely event that you have lost access to the wallet deposits were made from, then you should try to recover your wallet using the recovery words you saved during wallet creation. If that fails or lost alongside wallet, then you will have to make a new qualified deposit into your Portfolio 2.
+                        <span id="altText"></span>
+                     </p>
+                     <button class="btn btn-primary btn-block waves-effect" onclick="navigate('/cashier?action=deposit');">Make Deposit</button>
+                  </span>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script>
+         function preLoader(y){
+             if(y=="on"){
+                 document.getElementById('ajaxloader').style.display="block";
+             }
+             if(y=="off"){
+                 document.getElementById('ajaxloader').style.display="none";
+             }
+         }
+         function navigate(link){
+             preLoader('on');
+             window.location.href=link;
+         }
+      </script>
+      <script src="{% static 'js/jquery.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'js/waves.min.js' %}"></script>
+      <script src="{% static 'js/magnific-popup.js' %}"></script>
+      <script src="{% static 'js/magnific-popup-init.js' %}"></script>
+      <script src="{% static 'js/scripts.js' %}"></script>
+      <!-- <script id="badgeScript" src="{% static 'js/checkMessages.js' %}"></script> -->
+      <script id="depositScript" src="{% static 'js/deposit.js' %}"></script>
+      <script src="{% static 'js/wallet-address-validator.min.js' %}"></script>
+      <script id="withdrawScript" src="{% static 'js/withdraw.js' %}" data-sectoken="F718E9PBUTC40WS"></script>
+      <script id="addBeneficiary" src="{% static 'js/addBeneficiary.js' %}"></script>
+      <script id="verifyScript" src="{% static 'js/verify.js' %}"></script>
+      <script src="{% static 'js/rte.js' %}"></script>
+      <script src="{% static 'js/all_plugins.js' %}"></script>
+      <script>
+         var editor1cfg = {}      
+         editor1cfg.toolbar = "basic";
+         var editor1 = new RichTextEditor("#inp_editor1", editor1cfg); 
+      </script>
+      <script>
+         function menuToggler(m){
+             if(m=="deposit"){
+            document.getElementById('depositMenu1').setAttribute("class", "nav-item active");
+            document.getElementById('depositMenu2').setAttribute("class", "nav-link active");
+            document.getElementById('withdrawMenu1').setAttribute("class", "nav-item");
+            document.getElementById('withdrawMenu2').setAttribute("class", "nav-link");
+             }
+             if(m=="withdraw"){
+            document.getElementById('withdrawMenu1').setAttribute("class", "nav-item active");
+            document.getElementById('withdrawMenu2').setAttribute("class", "nav-link active");
+            document.getElementById('depositMenu1').setAttribute("class", "nav-item");
+            document.getElementById('depositMenu2').setAttribute("class", "nav-link");
+             }
+         }
+      </script>
+
+      <script>
+         $(document).ready(function(){
+            $("#depositSelect").change(function(){
+               $.ajax({
+                  url: "{% url 'deposit_summary' %}",
+                  type: "POST",
+                  dataType:'json',
+                  data: {
+                     portfolio_id: $("#depositSelect").val(),
+                     csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                  },
+                  success: function(response){
+                     for (var key in response.portfolios){
+                        $("#folioName").html("" + response.portfolios[key].portfolio_name + "")
+                        $("#folioBalance").html("" + response.portfolios[key].available + " BTC")
+                        $("#folioSetupDate").html("" + response.portfolios[key].setupdate + "")
+                        $("#folioTenure").html("" + response.portfolios[key].tenure + "")
+                        $("#folioRate").html("" + response.portfolios[key].rate + "")
+                        $("#folioTenureAmount").html("" + response.portfolios[key].investment_amount + "")
+                        $("#folioStatus").html("" + response.portfolios[key].remarks + "")
+                     }
+
+                  }});
+            });
+            $("#withdrawSelect").change(function(){
+               $.ajax({
+                  url: "{% url 'deposit_summary' %}",
+                  type: "POST",
+                  dataType:'json',
+                  data: {
+                     portfolio_id: $("#withdrawSelect").val(),
+                     csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                  },
+                  success: function(response){
+                     for (var key in response.portfolios){
+                        $("#folioName").html("" + response.portfolios[key].portfolio_name + "")
+                        $("#folioBalance").html("" + response.portfolios[key].available + " BTC")
+                        $("#folioSetupDate").html("" + response.portfolios[key].setupdate + "")
+                        $("#folioTenure").html("" + response.portfolios[key].tenure + "")
+                        $("#folioRate").html("" + response.portfolios[key].rate + "")
+                        $("#folioTenureAmount").html("" + response.portfolios[key].investment_amount + "")
+                        $("#folioStatus").html("" + response.portfolios[key].remarks + "")
+                     }
+
+                  }});
+            });
+            $("#createNewPortfolio").click(function(event){
+               event.preventDefault();
+               
+               available            = $("#linkTenureAmountBtc").val()
+               tenure               = $("#tenure").val()
+               investment_amount    = $("#linkTenureAmountBtc").val()
+               if(tenure == 3){
+                  rate = 3
+               }else if(tenure == 6){
+                  rate = 10                  
+               }else if(tenure == 12){
+                  rate = 25
+               }
+               remarks              = "Tenure not started"
+               savepro              = $("#savePro").val()
+               csrfmiddlewaretoken  = $('input[name=csrfmiddlewaretoken]').val()
+               if(investment_amount.length == ""){
+                  $("#errorBox").html("Error Occured")
+                  $("#errorBox").css("display","block")
+                  return false;
+               }else{
+                  $("#errorBox").css("display","none")
+               }
+               $.ajax({
+                  url: "{% url 'add_portfolio' %}",
+                  type: "POST",
+                  dataType:'json',
+                  data: {
+                     available : available,
+                     tenure : tenure,
+                     investment_amount : investment_amount,
+                     tenure : tenure,
+                     rate : rate,
+                     status : status,
+                     remarks : remarks,
+                     savepro : savepro,
+                     csrfmiddlewaretoken : csrfmiddlewaretoken
+                  },
+                  success: function(response){
+                       window.location.href="/portfolio"
+                  }});
+            });
+            $("#deposit").click(function(event){
+               event.preventDefault();
+               
+               user = $("#user").val()
+               portfolio_id= $("#depositSelect").val()
+               amount= $("#btcAmountDeposit").val()
+               csrfmiddlewaretoken = $('input[name=csrfmiddlewaretoken]').val()
+
+               if(amount.length == ""){
+                  $("#errorBoxDeposit").html("The minimum deposit amount is 0.0005 BTC")
+                  $("#errorBoxDeposit").css("display","block")
+                  return false;
+               }else{
+                  $("#errorBoxDeposit").css("display","none")
+               }
+               $.ajax({
+                  url: "{% url 'create_invoice' %}",
+                  type: "POST",
+                  dataType:'json',
+                  data: {
+                     user : user,
+                     portfolio_id : portfolio_id,
+                     amount : amount,
+                     csrfmiddlewaretoken : csrfmiddlewaretoken
+                  },
+                  success: function(response){
+                     for (var key in response.invoices){
+                        console.log("Worked")
+                        console.log(response.invoices[key].id); 
+                        window.location.href="/invoice/"+ response.invoices[key].id +""
+                     }                     
+                  }});
+            });
+
+            $("#send_message").click(function(event){
+               event.preventDefault();
+               
+               from_user = $("#user").val()
+               subject = $("#message_subject").val()
+               message_body = $("#inp_editor1").val()
+
+               csrfmiddlewaretoken = $('input[name=csrfmiddlewaretoken]').val()
+
+               if(subject.length == ""){
+                  $("#error").html("Your message must have a subject")
+                  $("#error").css("display","block")
+                  return false;
+               }else if(message_body.length == ""){
+                  $("#error").html("Your message must have a body")
+                  $("#error").css("display","block")
+                  return false;
+               }else{
+                  $("#error").css("display","none")
+               }
+               $.ajax({
+                  url: "{% url 'create_message' %}",
+                  type: "POST",
+                  dataType:'json',
+                  data: {
+                     subject : subject,
+                     message_body : message_body,
+                     csrfmiddlewaretoken : csrfmiddlewaretoken
+                  },
+                  success: function(response){
+                     for (var key in response.messages){
+                        $("#success").css("display","block")
+                        $("#error").css("display","none")
+                        $("#composeform").css("display","none")
+                        // console.log(response.invoices[key].id); 
+                        // window.location.href="/invoice/"+ response.invoices[key].id +""
+                     }                     
+                  }});
+            });
+
+
+
+            $("#withdraw").click(function(event){
+               event.preventDefault();
+               
+               user = $("#user").val()
+               portfolio_id= $("#withdrawSelect").val()
+               wallet= $("#recipientwallet").val()
+               amount= $("#btcAmountWithdraw").val()
+               csrfmiddlewaretoken = $('input[name=csrfmiddlewaretoken]').val()
+
+               if(wallet.length == ""){
+                  $("#errorBoxWithdraw").html("Wallet field cannot be empty")
+                  $("#errorBoxWithdraw").css("display","block")
+                  return false;
+               }else if(amount.length == ""){
+                  $("#errorBoxWithdraw").html("Amount field cannot be empty")
+                  $("#errorBoxWithdraw").css("display","block")
+                  return false;
+               }else{
+                  $("#errorBoxWithdraw").css("display","none")
+               }
+               $.ajax({
+                  url: "{% url 'withdraw_amount' %}",
+                  type: "POST",
+                  dataType:'json',
+                  data: {
+                     user : user,
+                     portfolio_id : portfolio_id,
+                     wallet : wallet,
+                     amount : amount,
+                     csrfmiddlewaretoken : csrfmiddlewaretoken
+                  },
+                  success: function(response){
+                     window.location.href="/withdrawsuccess"
+                  }
+               });
+            });            
+         });
+
+      </script>
+      <script>
+
+         $(document).ready(function(){
+
+            text = window.location.href
+            
+            if(text.includes("dashboard") == true){
+               $("#dashboard_link").addClass("active")
+            }else if(text.includes("deposit") == true){
+               $("#deposit_link").addClass("active")
+               $("#depositTab").addClass("active")
+               $("#withdrawTab").removeClass("active")
+               $("#buy").addClass("show active")
+               $("#sell").removeClass("show active")            
+            }else if(text.includes("withdraw") == true){
+               $("#withdraw_link").addClass("active")
+               $("#depositTab").removeClass("active")
+               $("#withdrawTab").addClass("active")
+               $("#sell").addClass("show active")
+               $("#buy").removeClass("show active")               
+            }else if(text.includes("portfolio") == true){
+               $("#portfolio_link").addClass("active")
+            }
+         });         
+
+         var coinRate = 26603.91;
+         var currency = "EUR";
+
+         function balConvertD(y) {
+
+            var btcAmountDeposit = parseFloat(document.getElementById('btcAmountDeposit').value);
+            var cashAmountDeposit = parseFloat(document.getElementById('cashAmountDeposit').value);
+            if (!btcAmountDeposit || !cashAmountDeposit) {
+               return;
+            } else {
+               btcConvertDeposit(y);
+            }
+         }
+
+         function btcConvertDeposit(y) {
+            let newSel = document.getElementById(y);
+            let newSelect = newSel.value;
+            let folio = portfolio.find(o => o.id === newSelect);
+            folio['balance'] = parseFloat(folio['balance']);
+            if (document.getElementById('btcAmountDeposit').value) {
+               var btcAmountDeposit = parseFloat(document.getElementById('btcAmountDeposit').value);
+               document.getElementById('cashAmountDeposit').value = (btcAmountDeposit * coinRate).toFixed(2) + ' EUR';
+               var newB = parseFloat((folio['balance'] + btcAmountDeposit).toFixed(8));
+               document.getElementById('newBalanceDeposit').innerHTML = newB + ' BTC';
+            } else {
+               document.getElementById('newBalanceDeposit').innerHTML = folio['balance'] + ' BTC';
+               document.getElementById('cashAmountDeposit').value = '';
+            }
+         }
+
+         function cashConvertDeposit(y) {
+            let newSel = document.getElementById(y);
+            let newSelect = newSel.value;
+            let folio = portfolio.find(o => o.id === newSelect);
+            folio['balance'] = parseFloat(folio['balance']);
+            if (document.getElementById('cashAmountDeposit').value) {
+               var cashAmountDeposit = parseFloat(document.getElementById('cashAmountDeposit').value);
+               var btcAmountDeposit = parseFloat((cashAmountDeposit / coinRate).toFixed(8));
+               document.getElementById('btcAmountDeposit').value = btcAmountDeposit + ' BTC';
+               var newB = parseFloat((folio['balance'] + btcAmountDeposit).toFixed(8));
+               document.getElementById('newBalanceDeposit').innerHTML = newB + ' BTC';
+            } else {
+               document.getElementById('newBalanceDeposit').innerHTML = folio['balance'] + ' BTC';
+               document.getElementById('btcAmountDeposit').value = '';
+            }
+         }
+
+         function balConvertW(y) {
+            if (document.getElementById('bankWithdraw').style.display == "block") {
+               var btcAmountWithdrawId = document.getElementById('btcAmountWithdraw2');
+               var cashAmountWithdrawId = document.getElementById('cashAmountWithdraw2');
+               var newBalanceWithdrawId = document.getElementById('newBalanceWithdraw2');
+            }
+            if (document.getElementById('walletWithdraw').style.display == "block") {
+               var btcAmountWithdrawId = document.getElementById('btcAmountWithdraw');
+               var cashAmountWithdrawId = document.getElementById('cashAmountWithdraw');
+               var newBalanceWithdrawId = document.getElementById('newBalanceWithdraw');
+            }
+
+            var btcAmountWithdraw = parseFloat(btcAmountWithdrawId.value);
+            var cashAmountWithdraw = parseFloat(cashAmountWithdrawId.value);
+            if (!btcAmountWithdraw || !cashAmountWithdraw) {
+               return;
+            } else {
+               btcConvertWithdraw(y);
+            }
+         }
+
+         function btcConvertWithdraw(y) {
+            if (document.getElementById('bankWithdraw').style.display == "block") {
+               var btcAmountWithdrawId = document.getElementById('btcAmountWithdraw2');
+               var cashAmountWithdrawId = document.getElementById('cashAmountWithdraw2');
+               var newBalanceWithdrawId = document.getElementById('newBalanceWithdraw2');
+            }
+            if (document.getElementById('walletWithdraw').style.display == "block") {
+               var btcAmountWithdrawId = document.getElementById('btcAmountWithdraw');
+               var cashAmountWithdrawId = document.getElementById('cashAmountWithdraw');
+               var newBalanceWithdrawId = document.getElementById('newBalanceWithdraw');
+            }
+
+
+            let newSel = document.getElementById(y);
+            let newSelect = newSel.value;
+            let folio = portfolio.find(o => o.id === newSelect);
+
+            folio['balance'] = parseFloat(folio['balance']);
+            if (btcAmountWithdrawId.value) {
+               var btcAmountWithdraw = parseFloat(btcAmountWithdrawId.value);
+               cashAmountWithdrawId.value = (btcAmountWithdraw * coinRate).toFixed(2) + ' EUR';
+               var newB = parseFloat((folio['balance'] - btcAmountWithdraw).toFixed(8));
+               newBalanceWithdrawId.innerHTML = newB + ' BTC';
+            } else {
+               newBalanceWithdrawId.innerHTML = folio['balance'] + ' BTC';
+               cashAmountWithdrawId.value = '';
+            }
+            if (document.getElementById('bankWithdraw').style.display == "block") {
+               var bankCurrency = document.getElementById('bankCurrency').value;
+               document.getElementById('bankRate2').innerHTML = Math.round((btcAmountWithdrawId.value.replace(/[^0-9.]/gi, '')) * document.getElementById('bankRate').value) + " " + bankCurrency;
+            }
+         }
+
+         function cashConvertWithdraw(y) {
+            if (document.getElementById('bankWithdraw').style.display == "block") {
+               var btcAmountWithdrawId = document.getElementById('btcAmountWithdraw2');
+               var cashAmountWithdrawId = document.getElementById('cashAmountWithdraw2');
+               var newBalanceWithdrawId = document.getElementById('newBalanceWithdraw2');
+            }
+            if (document.getElementById('walletWithdraw').style.display == "block") {
+               var btcAmountWithdrawId = document.getElementById('btcAmountWithdraw');
+               var cashAmountWithdrawId = document.getElementById('cashAmountWithdraw');
+               var newBalanceWithdrawId = document.getElementById('newBalanceWithdraw');
+            }
+            let newSel = document.getElementById(y);
+            let newSelect = newSel.value;
+            let folio = portfolio.find(o => o.id === newSelect);
+            folio['balance'] = parseFloat(folio['balance']);
+            if (cashAmountWithdrawId.value) {
+               var cashAmountWithdraw = parseFloat(cashAmountWithdrawId.value);
+               var btcAmountWithdraw = parseFloat((cashAmountWithdraw / coinRate).toFixed(8));
+               btcAmountWithdrawId.value = btcAmountWithdraw + ' BTC';
+               var newB = parseFloat((folio['balance'] - btcAmountWithdraw).toFixed(8));
+               newBalanceWithdrawId.innerHTML = newB + ' BTC';
+            } else {
+               newBalanceWithdrawId.innerHTML = folio['balance'] + ' BTC';
+               btcAmountWithdrawId.value = '';
+            }
+            if (document.getElementById('bankWithdraw').style.display == "block") {
+               var bankCurrency = document.getElementById('bankCurrency').value;
+               document.getElementById('bankRate2').innerHTML = Math.round((btcAmountWithdrawId.value.replace(/[^0-9.]/gi, '')) * document.getElementById('bankRate').value) + " " + bankCurrency;
+            }
+         } 
+      </script>
+    
+   </body>
+</html>

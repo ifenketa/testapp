@@ -1,0 +1,71 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<div class="homepage mb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 ">
+                <div class="card" style="background:#f7f8fa;">
+                <div class="card-header border-0 pb-0">
+                    <h4 class="card-title">Inbox</h4>
+                    <a href="#"> </a>
+                </div>
+                <div class="card-body">
+                    <div class="container bootdey">
+                        <div class="email-app">
+                            <nav>
+                            <a href="/compose" class="btn btn-primary btn-block waves-effect"><i class="fa fa-edit"></i> Compose</a>
+                            <ul class="nav">
+                                <li class="nav-item active" style="border-bottom-color: #2f2cd8;opacity:0.75">
+                                    <a class="nav-link active" href="/messages" style="color:#2f2cd8;"><i class="fa fa-envelope"></i> Inbox <span id="inboxBadge" class="badge badge-danger" style="display:none;"></span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/sentmessages"><i class="fa fa-send"></i> Sent</a>
+                                </li>
+                            </ul>
+                            </nav>
+                            <main>
+                                <div class="alert alert-success show flex items-center mb-2" role="alert" id="success" style="display:none"> <i data-feather="check" class="w-6 h-6 mr-2"></i> Great!, Our customer service team is now in receipt of your mail and will respond in no time. </div>
+                                <div id="error" style="display:none" class="alert alert-danger show flex items-center mb-2" role="alert"> <i data-feather="alert-circle" class="w-6 h-6 mr-2"></i> Sending mail failed. Please check your internet connection and try again.</div>                                
+                                <form id="composeform">{% csrf_token %}
+                                    <input type="hidden" name="user" id="user" value="{{user.id}}">
+                                   <div class="form-row mb-3" id="toDiv">
+                                      <label for="to" class="col-2 col-sm-1 col-form-label">To:</label>
+                                      <div class="col-10 col-sm-11">
+                                         <input type="text" class="form-control" id="to" placeholder="Customer Support" readonly="">
+                                      </div>
+                                   </div>
+                                   <div class="form-row mb-3" id="subjectDiv">
+                                      <label for="bcc" class="col-2 col-sm-1 col-form-label">Subject:</label>
+                                      <div class="col-10 col-sm-11">
+                                            <input type="text" class="form-control" id="message_subject" placeholder="Enter subject" value="">
+                                      </div>
+                                   </div>                                
+                                   <div class="form-row mb-3" id="subjectDiv">
+                                      <label for="bcc" class="col-2 col-sm-1 col-form-label">Message:</label>
+                                      <div class="col-10 col-sm-11">
+                                         <textarea id="inp_editor1" ></textarea> 
+                                      </div>
+                                   </div>
+                                   <div class="form-row mb-3" id="subjectDiv">
+                                        <label for="bcc" class="col-2 col-sm-1 col-form-label"></label>
+                                            <div class="col-10 col-sm-11">
+                                            <div class="form-group">
+                                                <button type="submit" id="send_message" class="btn btn-primary waves-effect">Send</button>
+                                            </div>
+                                        </div>
+                                    </div>                                                                      
+                                </form>
+                             </main>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

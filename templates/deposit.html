@@ -1,0 +1,512 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<div class="homepage mb-80">
+   <div class="container">
+      <div class="row">
+         <div class="col-xl-5 col-lg-5 col-md-12">
+            <div class="card" style="background:#f7f8fa;">
+               <div class="card-body">
+                  <div class="buy-sell-widget">
+                     <ul class="nav nav-tabs">
+                        <li class="nav-item"><a id="depositTab" onclick="displayPortfolio('depositSelect');menuToggler('deposit');" class="nav-link active" data-toggle="tab" href="#buy">DEPOSIT</a>
+                        </li>
+                        <li class="nav-item"><a id="withdrawTab" onclick="displayPortfolio('withdrawSelect');menuToggler('withdraw');" class="nav-link  " data-toggle="tab" href="#sell">WITHDRAW</a>
+                        </li>
+                     </ul>
+                     <div class="tab-content tab-content-default">
+                        <div class="tab-pane fade show active" id="buy" role="tabpanel">
+                           <div id="errorBoxDeposit" class="alert alert-danger show flex items-center mb-2" style="display: none;"></div>
+                           <form method="post" name="myform" class="currency_validate">{% csrf_token %}
+                              <input type="hidden" name="user" id="user" value="{{user.id}}">
+                              <div class="form-group">
+                                 <label class="mr-sm-2">Portfolio</label>
+                                 <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                       <label class="input-group-text"><i class="cc BTC-alt"></i></label>
+                                    </div>
+                                    <select id="depositSelect"  name="portfolio_id" class="form-control">                                      
+                                          {% for portfolio in portfolios %}
+                                             {% if selectportfolio.id == portfolio.id %}
+                                                <option value="{{portfolio.id}}" selected="selected"> {{portfolio.portfolio_name}}  ||  {{portfolio.available}} BTC</option>
+                                             {% else %}                                         
+                                                <option value="{{portfolio.id}}"> {{portfolio.portfolio_name}}  ||  {{portfolio.available}} BTC</option>
+                                             {% endif %}                                         
+                                          {% endfor %}                                         
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="form-group">
+                                 <label class="mr-sm-2">Enter your amount</label>
+                                 <div class="input-group">
+                                    <input type="text" id="btcAmountDeposit" name="currency_amount" class="form-control" placeholder="0.0214 BTC">
+                                    <input type="text" id="cashAmountDeposit" name="usd_amount" class="form-control" placeholder="125.00 EUR">
+                                 </div>
+                                 <div class="d-flex justify-content-between mt-3">
+                                    <p class="mb-0">New Balance</p>
+                                    <h6 id="newBalanceDeposit" class="mb-0"></h6>
+                                 </div>
+                              </div>
+                              <button id="deposit" name="submit" class="btn btn-primary btn-block waves-effect"><i class="fa fa-arrow-down">&nbsp;</i>Deposit Now</button>
+                           </form>
+                        </div>
+                        <div class="tab-pane fade " id="sell">
+                           <div id="errorBoxWithdraw" class="alert alert-danger show flex items-center mb-2" style="display:none"></div>
+                           <div id="warningBoxWithdraw" class="alert alert-warning show flex items-center mb-2" style="display: none;"></div>
+                           <div class="form-group">
+                              <label class="mr-sm-2">Portfolio</label>
+                              <div class="input-group mb-3">
+                                 <div class="input-group-prepend">
+                                    <label class="input-group-text"><i class="cc BTC-alt"></i></label>
+                                 </div>
+                                 <select id="withdrawSelect" name="portfolio" class="form-control">
+                                    {% for portfolio in portfolios %}
+                                    {% if selectportfolio.id == portfolio.id %}
+                                       <option value="{{portfolio.id}}" selected="selected"> {{portfolio.portfolio_name}}  ||  {{portfolio.available}} BTC</option>
+                                    {% else %}                                         
+                                       <option value="{{portfolio.id}}"> {{portfolio.portfolio_name}}  ||  {{portfolio.available}} BTC</option>
+                                    {% endif %}                                         
+                                 {% endfor %}   
+                                 </select>
+                              </div>
+                           </div>
+                           <span id="typeChooser" style="display:block">
+                              <b> Where are you withdrawing to ? </b>
+                              <table width="100%">
+                                 <tbody>
+                                    <tr>
+                                       <td>&nbsp;</td>
+                                       <td>&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                       <td><label>
+                                          <input type="radio" name="destinationType" value="wallet" onclick="document.getElementById('typeChooser').style.display='none';
+                                             document.getElementById('walletWithdraw').style.display='block';
+                                             document.getElementById('bankWithdraw').style.display='none';
+                                             ">
+                                          Bitcoin Wallet</label>
+                                       </td>
+                                       <td><label>
+                                          <input type="radio" name="destinationType" value="bank" onclick="document.getElementById('typeChooser').style.display='none';
+                                             document.getElementById('walletWithdraw').style.display='none';
+                                             document.getElementById('bankWithdraw').style.display='block';
+                                             ">
+                                          Bank Account</label>
+                                       </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </span>
+                           <span id="bankWithdraw" style="display:none">
+                              <form id="withdraw1" style="display:block;" method="post" name="myform" class="currency2_validate" novalidate="novalidate" onsubmit="event.preventDefault(); withdraw('bank');">
+                                 <div>
+                                    <table width="100%">
+                                       <tbody>
+                                          <tr>
+                                             <td>&nbsp;</td>
+                                             <td>&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                             <td><label>
+                                                <input type="radio" id="destinationType3a" name="destinationType3" value="wallet" onclick="document.getElementById('typeChooser').style.display='none';
+                                                   document.getElementById('walletWithdraw').style.display='block';
+                                                   document.getElementById('bankWithdraw').style.display='none';
+                                                   this.checked=false;
+                                                   document.getElementById('destinationType3b').checked=true;">
+                                                Bitcoin Wallet</label>
+                                             </td>
+                                             <td><label>
+                                                <input type="radio" id="destinationType3b" name="destinationType3" value="bank" onclick="document.getElementById('typeChooser').style.display='none';
+                                                   document.getElementById('walletWithdraw').style.display='none';
+                                                   document.getElementById('bankWithdraw').style.display='block';
+                                                   " checked="checked">
+                                                Bank Account</label>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td></td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <div>&nbsp;</div>
+                                 <div class="form-group">
+                                    <label class="mr-sm-2">Beneficiary</label>
+                                    <span id="yesBene" style="display:none;">
+                                       <table>
+                                          <tbody>
+                                             <tr width="100%">
+                                                <td id="bankBeneficiary" width="80%" align="left"></td>
+                                             </tr>
+                                             <tr width="100%">
+                                                <td id="bankAccount" width="80%" align="left"></td>
+                                             </tr>
+                                             <tr width="100%">
+                                                <td id="bankName" width="80%" align="left"></td>
+                                                <td id="bankCountry" width="20%" align="right"></td>
+                                             </tr>
+                                          </tbody>
+                                       </table>
+                                       <input type="hidden" id="bankRecipient" value="">
+                                       <input type="hidden" id="bankRate" value="0">
+                                       <input type="hidden" id="bankCurrency" value="">
+                                    </span>
+                                    <span id="noBene" style="display:block;"><a href="#" onclick="document.getElementById('addModal').style.display='block';"><font color="secondary"><i class="fa fa-plus"></i> Add Beneficiary</font> </a></span>
+                                 </div>
+                                 <span id="completeForm" style="display:none;">
+                                    <div class="form-group">
+                                       <label class="mr-sm-2">Enter your amount</label>
+                                       <div class="input-group">
+                                          <input type="text" id="btcAmountWithdraw2" name="currency_amount" class="form-control" placeholder="0.0214 BTC">
+                                          <input type="text" id="cashAmountWithdraw2" name="usd_amount" class="form-control" placeholder="125.00 EUR">
+                                       </div>
+                                       <div class="d-flex justify-content-between mt-3">
+                                          <p class="mb-0">New balance</p>
+                                          <h6 id="newBalanceWithdraw2" class="mb-0"></h6>
+                                       </div>
+                                       <div class="d-flex justify-content-between mt-3">
+                                          <p class="mb-0">Recipient Receives</p>
+                                          <h6 id="bankRate2" class="mb-0"></h6>
+                                       </div>
+                                    </div>
+                                    <button type="submit" name="submit" class="btn btn-primary btn-block waves-effect"><i class="fa fa-arrow-up">&nbsp;</i>Withdraw
+                                    Now</button>
+                                 </span>
+                              </form>
+                           </span>
+                           <span id="walletWithdraw" style="display:none">
+                              <form id="withdraw1b" style="display:block;" method="post" name="myform" class="currency2_validate" novalidate="novalidate" onsubmit="event.preventDefault(); withdraw('wallet');">
+                                 <div>
+                                    <table width="100%">
+                                       <tbody>
+                                          <tr>
+                                             <td>&nbsp;</td>
+                                             <td>&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                             <td><label>
+                                                <input type="radio" id="destinationType2a" name="destinationType2" value="wallet" onclick="document.getElementById('typeChooser').style.display='none';
+                                                   document.getElementById('walletWithdraw').style.display='block';
+                                                   document.getElementById('bankWithdraw').style.display='none';
+                                                   " checked="checked">
+                                                Bitcoin Wallet</label>
+                                             </td>
+                                             <td><label>
+                                                <input type="radio" id="destinationType2b" name="destinationType2" value="bank" onclick="document.getElementById('typeChooser').style.display='none';
+                                                   document.getElementById('walletWithdraw').style.display='none';
+                                                   document.getElementById('bankWithdraw').style.display='block';
+                                                   this.checked=false;
+                                                   document.getElementById('destinationType2a').checked=true;
+                                                   ">
+                                                Bank Account </label>
+                                             </td>
+                                          </tr>
+                                          <tr>
+                                             <td></td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 <div>&nbsp;</div>
+                                 <div class="form-group">
+                                    <label class="mr-sm-2">Recipient wallet</label>
+                                    <div class="form-group">
+                                       <div class="input-group mb-3">
+                                          <div class="input-group-prepend">
+                                             <label class="input-group-text"><i class="fa fa-money"></i></label>
+                                          </div>
+                                          <input type="text" id="recipientwallet" class="form-control" placeholder="3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <label class="mr-sm-2">Enter your amount</label>
+                                    <div class="input-group">
+                                       <input type="text" id="btcAmountWithdraw" name="currency_amount" class="form-control" placeholder="0.0214 BTC">
+                                       <input type="text" id="cashAmountWithdraw" name="usd_amount" class="form-control" placeholder="125.00 EUR">
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-3">
+                                       <p class="mb-0">New balance</p>
+                                       <h6 id="newBalanceWithdraw" class="mb-0"></h6>
+                                    </div>
+                                 </div>
+                                 <button type="submit" name="submit" id="withdraw" class="btn btn-primary btn-block waves-effect"><i class="fa fa-arrow-up">&nbsp;</i>Withdraw Now</button>
+                              </form>
+                           </span>
+                           <form id="withdraw2" style="display:none;" method="post" name="myform" class="currency2_validate" novalidate="novalidate" onsubmit="event.preventDefault(); withdraw2();">
+                              <div class="form-group">
+                                 <label class="mr-sm-2">AUTHENTICATION</label>
+                                 <div class="input-group mb-3">
+                                    We will send a 6
+                                    digit OTP to your registered phone number +4915****64997 to authorize 
+                                    your transaction.
+                                    <table width="200">
+                                       <tbody>
+                                          <tr>
+                                             <td>&nbsp;</td>
+                                             <td>&nbsp;</td>
+                                          </tr>
+                                          <tr>
+                                             <td><label>
+                                                <input type="radio" name="type" value="voice" checked="checked">
+                                                Voice</label>
+                                             </td>
+                                             <td><label>
+                                                <input type="radio" name="type" value="sms">
+                                                Text</label>
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                              <button type="submit" name="submit" class="btn btn-primary btn-block waves-effect">Send
+                              </button>
+                           </form>
+                           <form id="withdraw3" style="display:none;" method="post" name="myform" class="currency2_validate" novalidate="novalidate" onsubmit="event.preventDefault(); withdraw3();">
+                              <div class="form-group">
+                                 <label class="mr-sm-2">AUTHENTICATION</label>
+                                 <div class="input-group mb-3">
+                                    <a class="page-back text-muted" href="#" onclick="document.getElementById('withdraw2').style.display='block';
+                                       document.getElementById('withdraw3').style.display='none';
+                                       "><span><i class="fa fa-angle-left"></i></span> Change method</a>
+                                    Please enter the OTP that was sent to 
+                                    you on +4915****64997.
+                                    You may change the delivery 
+                                    method(Voice/Text) if you are experiencing delays receiving your code.
+                                    <input type="text" id="code" class="form-control text-center font-weight-bold" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/gi, '');if(this.value.length==6){document.getElementById('verifyButton').disabled=false;}else{
+                                       document.getElementById('verifyButton').disabled=true}" onchange="this.value=this.value.replace(/[^0-9]/gi, '');if(this.value.length==6){document.getElementById('verifyButton').disabled=false;}">
+                                 </div>
+                              </div>
+                              <button id="verifyButton" type="submit" name="submit" class="btn btn-primary btn-block waves-effect" disabled="disabled">Authorize
+                              </button>
+                           </form>
+                           <form id="success" style="display:none" class="identity-upload" action="transactions">
+                              <div class="identity-content">
+                                 <span class="icon"><i class="fa fa-check"></i></span>
+                                 <h4>Successful</h4>
+                                 <p>You portfolio withdrawal has 
+                                    been processed successfully. You may click the button below to 
+                                    view/track the transaction 
+                                    status. Bitcoin transactions would typically take less than
+                                    30mins to confirm and reach
+                                    your recipient wallet. However, certain network congestions
+                                    can cause unusually high 
+                                    delays.
+                                 </p>
+                              </div>
+                              <div class="text-center">
+                                 <button type="submit" class="btn btn-primary pl-5 pr-5 waves-effect">Track</button>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-xl-7 col-lg-7 col-md-12">
+            <div class="card" style="background:#f7f8fa;">
+               <div class="card-body">
+                  <div class="buyer-seller">
+                     <div class="d-flex justify-content-between mb-3">
+                        <div class="seller-info text-right">
+                           <span id="folioName">{{displayportfolio.portfolio_name}}</span> Summary
+                        </div>
+                     </div>
+                     <div class="table-responsive">
+                        <table class="table">
+                           <tbody>
+                              <tr>
+                                 <td>Balance</td>
+                                 <td id="folioBalance">{{displayportfolio.available}} BTC</td>
+                              </tr>
+                              <tr>
+                                 <td>Setup Date</td>
+                                 <td id="folioSetupDate">{{displayportfolio.setupdate}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Initial Contract</td>
+                                 <td id="folioTenureAmount">{{displayportfolio.investment_amount}} BTC</td>
+                              </tr>
+                              <tr>
+                                 <td>Tenure</td>
+                                 <td id="folioTenure">{{displayportfolio.tenure}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Rate</td>
+                                 <td id="folioRate">{{displayportfolio.rate}}%</td>
+                              </tr>
+                              <tr>
+                                 <td>Maturity</td>
+                                 <td id="folioMaturityDate">Not set</td>
+                              </tr>
+                              <tr>
+                                 <td>Remarks</td>
+                                 <td id="folioStatus">{{displayportfolio.remarks}}</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-xl-12">
+            <div class="card">
+               <div class="card-header">
+                  <h4 class="card-title">FAQ</h4>
+               </div>
+               <div class="card-body">
+                  <div id="accordion-faq" class="accordion">
+                     <div class="card">
+                        <div class="card-header">
+                           <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="false" aria-controls="collapseOne1"><i class="fa" aria-hidden="true"></i>
+                              How do i fund my Portfolio ?
+                           </h4>
+                        </div>
+                        <div id="collapseOne1" class="collapse show" data-parent="#accordion-faq">
+                           <div class="card-body">
+                              As a complete beginner, you 
+                              should take the following steps to successfully purchase bitcoins and 
+                              subsequently deposit it into one of your existing investment Portofolios
+                              with us.<br>
+                              <div class="terms_condition-text">
+                                 <ul>
+                                    <li>
+                                       <i class="fa fa-circle"></i>
+                                       <p><b>Create your own wallet</b><br>Here are a few examples of places you can create a wallet. 
+                                          There are also tutorial videos to get you started.<br><a href="https://www.exodus.io/" target="_blank"><u>www.exodus.io</u></a> <br>
+                                          <a href="https://www.blockchain.com/" target="_blank"><u>www.blockchain.com</u></a><br>
+                                          <a class="popup-youtube" href="https://www.youtube.com/watch?v=6SiZHOa_0Ew" style="color:#5e72e4;">Tutorial video(create): 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br><br>Your
+                                          wallet is like your personal bitcoin bank account.
+                                          Whenever you purchase bitcoins 
+                                          online, it is sent to your wallet address and you can thereafter send 
+                                          from your own wallet into your
+                                          Coinreef portfolio. Also, whenever 
+                                          you withdraw funds from your Coinreef portfolio, it is sent to your 
+                                          specified wallet address where you have complete and anonymous control.
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <i class="fa fa-circle"></i>
+                                       <p><b>Purchase bitcoins online.</b><br>
+                                          Upon creation of your own 
+                                          personal wallet, the next step is to fund your wallet by buying bitcoins
+                                          online using any/all of the options below.
+                                          <br> Each option has varying payment methods(credit/debit cards, bank transfers, POLi, cash, e.t.c)
+                                          <br> Here are a few examples with simple to follow tutorial vidoes;<br>
+                                          <a href="https://www.binance.com/" target="_blank"><u>www.binance.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=15oKacmTUTA" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                          <a href="https://www.coinbase.com/" target="_blank"><u>www.coinbase.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=O1KaAboPX44" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                          <a href="https://www.gemini.com/" target="_blank"><u>www.gemini.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=ZnnHDlU00F0" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>    
+                                          <a href="https://www.coinmama.com/" target="_blank"><u>www.coinmama.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=3SorAose5TU" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>
+                                          <a href="https://www.localbitcoins.com/" target="_blank"><u>www.localbitcoins.com</u></a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=w2qZT1-9UdY" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>        
+                                          <a href="https://www.coinspot.com.au/" target="_blank"><u>www.coinspot.com.au</u> (AU)</a> : <a class="popup-youtube" href="https://www.youtube.com/watch?v=CyyQSjSYttM" style="color:#5e72e4;">Video: 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a><br>          
+                                       </p>
+                                    </li>
+                                    <li>
+                                       <i class="fa fa-circle"></i>
+                                       <p><b>Fund your portfolio</b><br>First, you click on DEPOSIT and choose how much bitcoin to deposit into your Coinreef portfolio.
+                                          Our systems will generate a bitcoin receiving address that is directly linked to your portfolio.<br> Simply head over to one of your personal wallet 
+                                          and send the applicable amount to the bitcoin address displayed on your Coinreef checkout screen.<br>
+                                          You do not have to deposit all the funds at a go, Let's say you created a deposit of 0.5 BTC, you can choose to send any
+                                          fraction of the amount and it will be immediately reflected in your portfolio balance.
+                                          <br> Here is an easy video tutorial on sending bitcoin from your own wallet<br>
+                                          <a class="popup-youtube" href="https://www.youtube.com/watch?v=15oKacmTUTA" style="color:#5e72e4;">Tutorial video(send): 
+                                          <i class="fa fa-play" style="color:#5e72e4;"></i></a>
+                                          <br><i>Please note that Bitcoin-Cash(BCH) is different from Bitcoin(BTC).
+                                          Payments sent from a BCH wallet to a BTC wallet will not reflect and funds will be lost.</i>
+                                       </p>
+                                    </li>
+                                 </ul>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card">
+                        <div class="card-header">
+                           <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2"><i class="fa" aria-hidden="true"></i>How
+                              do i withdraw from my Portfolio ?
+                           </h4>
+                        </div>
+                        <div id="collapseTwo2" class="collapse" data-parent="#accordion-faq">
+                           <div class="card-body">Withrawing your from your Coinreef Portfolio is very easy and straight-forward.<br>
+                              First, you click on WITHDRAW and select the portfolio to withdraw funds from.<br> Next, you provide your destination wallet address or bank account and the amount of bitcoin to withdraw.<br>
+                              That's it. you should 
+                              receive your bitcoins in your destination wallet within a few minutes 
+                              depending on network load or within 3 business days if sent to your bank
+                              account.<br>
+                              <i>Funds sent to a bitcoin 
+                              wallet is completely untraceable and there's absolutely no way to 
+                              recall/refund the money. Hence, you must make sure to double-check your 
+                              recipient wallet.</i>  
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card">
+                        <div class="card-header">
+                           <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseThree3" aria-expanded="false" aria-controls="collapseThree3"><i class="fa" aria-hidden="true"></i>
+                              Can i withdraw before tenure maturity ?
+                           </h4>
+                        </div>
+                        <div id="collapseThree3" class="collapse" data-parent="#accordion-faq">
+                           <div class="card-body">Yes, you can withdraw your bitcoin at any time. However, if you choose to withdraw before the maturity of your portfolio,
+                              no interest will be paid on your investments.<br>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card">
+                        <div class="card-header">
+                           <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseThree4" aria-expanded="false" aria-controls="collapseThree4"><i class="fa" aria-hidden="true"></i>
+                              When does my tenure count start ?
+                           </h4>
+                        </div>
+                        <div id="collapseThree4" class="collapse" data-parent="#accordion-faq">
+                           <div class="card-body">Your 
+                              tenure starts counting the moment you make deposits equal or above the 
+                              initial contract. 
+                              Whenever your balance falls 
+                              below the initial contract(As a result of withdrawals) your tenure count
+                              will reset and will
+                              again start counting from 
+                              the beginning the moment your balance equals or exceeds the initial 
+                              contract amount.
+                              <br>Anytime you make 
+                              portfolio withdrawal/deposit, your tenure count is resetted.
+                              This also applies to 
+                              withdrawals/deposits that doesn't take your portfolio balance below 
+                              below initial contract amount.
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card">
+                        <div class="card-header">
+                           <h4 class="mb-0 collapsed c-pointer" data-toggle="collapse" data-target="#collapseThree5" aria-expanded="false" aria-controls="collapseThree5"><i class="fa" aria-hidden="true"></i>
+                              How much do i earn if deposit is above initial contract ?
+                           </h4>
+                        </div>
+                        <div id="collapseThree5" class="collapse" data-parent="#accordion-faq">
+                           <div class="card-body">If 
+                              you created a portfolio for say 10 BTC and ended up funding it with 12 
+                              BTC, at the end of your chosen tenure, your interest will be calculated 
+                              with 12 BTC.
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

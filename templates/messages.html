@@ -1,0 +1,50 @@
+{% extends "master.html" %}
+{% load static %}
+{% block content %}
+<div class="homepage mb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 ">
+                <div class="card" style="background:#f7f8fa;">
+                <div class="card-header border-0 pb-0">
+                    <h4 class="card-title">Inbox</h4>
+                    <a href="#"> </a>
+                </div>
+                <div class="card-body">
+                    <div class="container bootdey">
+                        <div class="email-app">
+                            <nav>
+                            <a href="/compose" class="btn btn-primary btn-block waves-effect"><i class="fa fa-edit"></i> Compose</a>
+                            <ul class="nav">
+                                <li class="nav-item active" style="border-bottom-color: #2f2cd8;opacity:0.75">
+                                    <a class="nav-link active" href="/messages" style="color:#2f2cd8;"><i class="fa fa-envelope"></i> Inbox <span id="inboxBadge" class="badge badge-danger" style="display:none;"></span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/sentmessages"><i class="fa fa-send"></i> Sent</a>
+                                </li>
+                            </ul>
+                            </nav>
+                            <main>
+                            <div class="table-responsive email">
+                                <table class="table table-hover" style="width:100%;">
+                                    <tbody id="resultsList" class="paginate paginate-0">
+                                        {% for message in messages %}
+                                            <tr class="read" style="opacity: 1;">
+                                            <td class="name"><a href="/viewmessage/{{message.id}}">{{message.from_user}}</a></td>
+                                            <td class="subject"><a href="/viewmessage/{{message.id}}">{{message.subject}}</a></td>
+                                            <td class="time"><a href="/viewmessage/{{message.id}}">{{message.message_date}}</a></td>
+                                        {% endfor %}  
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            </main>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
